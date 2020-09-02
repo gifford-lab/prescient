@@ -2,6 +2,7 @@
 Software for PRESCIENT (Potential eneRgy undErlying Single Cell gradIENTs), a generative model for modeling single-cell time-series. 
 + Current paper version: https://www.biorxiv.org/content/10.1101/2020.08.26.269332v1
 + For paper pre-processing scripts, training bash scripts, pre-trained models, and visualization notebooks please visit https://github.com/gifford-lab/prescient-analysis.
+
 ![trajectories_gif](gifs/trajectories.gif)
 
 ## Setup
