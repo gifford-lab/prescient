@@ -6,12 +6,12 @@ show_downloads: false
 navbar_items:
   - title: Home
     url: /
-  - title: Notebooks
-    url: /tutorial
   - title: Documentation
     url: /documentation
-  - title: File formats
-    url: /file_formats
+  - title: Input formats
+    url: /input_formats
+  - title: Analysis notebooks
+    url: /analysis
   - title: Paper
     url: /paper
   - title: Github
