@@ -1,0 +1,18 @@
+theme: jekyll-theme-tactile
+title: prescient
+description: A method for simulating single cells using longitudinal scRNA-seq.
+repository: gifford-lab/prescient
+show_downloads: false
+navbar_items:
+  - title: Home
+    url: /
+  - title: Notebooks
+    url: /tutorial
+  - title: Documentation
+    url: /documentation
+  - title: File formats
+    url: /file_formats
+  - title: Paper
+    url: /paper
+  - title: Github
+    url: /github
