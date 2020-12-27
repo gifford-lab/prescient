@@ -1,1 +1,4 @@
-# prescient
+---
+layout: home
+location: Home
+---

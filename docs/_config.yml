@@ -1,6 +1,6 @@
 theme: jekyll-theme-tactile
 title: prescient
-description: A method for simulating single cells using longitudinal scRNA-seq.
+description: Simulation of single cell differentiation trajectories using longitudinal scRNA-seq.
 repository: gifford-lab/prescient
 show_downloads: false
 navbar_items:
