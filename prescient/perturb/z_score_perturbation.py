@@ -12,7 +12,6 @@ def perturb(perturb_genes, std, pca, z_score):
     genes = std["genes"]
     perturb_genes=perturb_genes.split(",")
     idx=[]
-
     # perturb genes that appear in highly variable gene list
     for elt in perturb_genes:
         if (elt in genes):
