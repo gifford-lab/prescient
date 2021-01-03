@@ -1,0 +1,49 @@
+---
+title: Documentation
+noheader: true
+permalink: command_line_interface/
+layout: document
+location: command_line_interface
+---
+
+<p>PRESCIENT is primarily implemented as a command line tool.
+    <br>
+    Access manual for each command in the command-line using the syntax <span class="text-monospace">prescient cmd -h</span>. We recommend
+    Scanpy or Seurat for preprocessing.
+    tools.
+</p>
+
+<hr/>
+{% for tool in site.data.tools %}
+<div style="border-bottom: 1px solid rgba(0,0,0,.125);padding-bottom: 14px;">
+    <h2>{{ tool.name }}</h2>
+
+    <a data-toggle="collapse" href="#{{ tool.name }}_details" role="button"
+       aria-expanded="false" aria-controls="{{ tool.name }}_details">
+        {{ tool.desc }}
+    </a>
+    <div style="margin-left: 14px;" id="{{ tool.name }}_details" class="collapse">
+        <table class="table table-sm">
+            <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+            </tr>
+            {% for param in tool.params %}
+            <tr>
+
+                <td>{% if param.required %} <b> {% endif %} {{param.name}} {% if param.required %} </b> {% endif %}
+                </td>
+                <td>{{param.help}}{% if param.choices %}<br/>Choices: {{param.choices | join: ", "}} {% endif %}{% if
+                    param.default %}<br/>Default: {{param.default}} {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if site.data.examples[tool.name] %}
+        <b>Example Usage:</b><br/>
+        <span class="text-monospace">wot {{tool.name }} {{ site.data.examples[tool.name].code }}</span><br/>
+        {{ site.data.examples[tool.name].text }}
+        {% endif %}
+    </div>
+</div>
+{% endfor %}

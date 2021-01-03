@@ -2,7 +2,6 @@
 layout: core
 title: Home
 ---
-
 <div class="container-fluid">
     <div class="list-group">
           <div class="row">
@@ -20,9 +19,22 @@ title: Home
               <div class="row">
                   <div class="col-sm-12 col-md-5 offset-md-2">
                       <h2>Installation</h2>
+                      <h4>PyPI Installation</h4>
+                      <p class="lead">
+                        We recommend using pip to install PRESCIENT.
+                        <code>
+                        pip install prescient
+                        </code>
+                      </p>
+
                       <h4>Github Installation</h4>
                       <p class="lead">
-                        TO-DO
+                        <code>
+                          git clone git@github.com:gifford-lab/prescient.git
+                          cd prescient
+                          pip install .
+                        </code>
+
                       </p>
                       <h3>Docker</h3>
                       <p class="lead">
@@ -35,7 +47,7 @@ title: Home
           <a href="{{site.baseurl}}/documentation" class="list-group-item list-group-item-action home-list-item">
               <div class="row">
                   <div class="col-sm-12 col-md-5 offset-md-2">
-                      <h2>Input formatsn</h2>
+                      <h2>Input formats</h2>
                       <p class="lead">Recommended input formats to PRESCIENT.</p>
 
                   </div>
@@ -43,13 +55,33 @@ title: Home
               </div>
           </a>
 
+        <a href="{{site.baseurl}}/quickstart" class="list-group-item list-group-item-action home-list-item">
+            <div class="row">
+                <div class="col-sm-12 col-md-5 offset-md-2">
+                    <h2>Quickstart</h2>
+                    <p class="lead">Quickly train a PRESCIENT model on your scRNA-seq data and simulate trajectories.</p>
+                </div>
+
+            </div>
+        </a>
 
 
         <a href="{{site.baseurl}}/documentation" class="list-group-item list-group-item-action home-list-item">
             <div class="row">
                 <div class="col-sm-12 col-md-5 offset-md-2">
                     <h2>Documentation</h2>
-                    <p class="lead">Documentation for training and testing PRESCIENT models starting with scRNA-seq time-series data.</p>
+                    <p class="lead">Full command-line documentation for training and testing PRESCIENT models starting with scRNA-seq time-series data.</p>
+
+                </div>
+
+            </div>
+        </a>
+
+        <a href="{{site.baseurl}}/notebook_documentation" class="list-group-item list-group-item-action home-list-item">
+            <div class="row">
+                <div class="col-sm-12 col-md-5 offset-md-2">
+                    <h2>Notebook Tutorial</h2>
+                    <p class="lead">A step-by-step guide to training PRESCIENT models in a Jupyter Notebook environment.</p>
 
                 </div>
 
@@ -61,6 +93,15 @@ title: Home
                 <div class="col-sm-12 col-md-5 offset-md-2">
                     <h2>Analysis</h2>
                     <p class="lead">A step-by-step guide to generating analyses and visualizations using trained PRESCIENT models.</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="{{site.baseurl}}/cloud_resources" class="list-group-item list-group-item-action home-list-item">
+            <div class="row">
+                <div class="col-sm-12 col-md-5 offset-md-2">
+                    <h2>Compute Resources</h2>
+                    <p class="lead">Training .</p>
                 </div>
             </div>
         </a>
