@@ -1,5 +1,5 @@
-theme: jekyll-theme-slate
-title: PRESCIENT
+remote_theme: yous/whiteglass
+title: prescient
 description: Simulation of single cell differentiation trajectories using longitudinal scRNA-seq.
 repository: gifford-lab/prescient
 show_downloads: false
@@ -14,3 +14,15 @@ navbar_items:
     url: /analysis
   - title: Paper
     url: /paper
+
+atom:
+  buildCommand:
+    - jekyll
+    - build
+    - --option
+    - --this
+  buildEnv:
+    JEKYLL_ENV: development
+  postDirs:
+    - _newsletters
+  defaultPostDir: _drafts
