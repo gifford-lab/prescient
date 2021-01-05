@@ -10,7 +10,7 @@ navbar_items:
     url: /documentation
   - title: Input formats
     url: /input_formats
-  - title: Analysis notebooks
+  - title: Vignettes
     url: /analysis
   - title: Paper
     url: /paper
