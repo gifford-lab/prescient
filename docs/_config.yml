@@ -3,6 +3,7 @@ title: prescient
 description: Simulation of single cell differentiation trajectories using longitudinal scRNA-seq.
 repository: gifford-lab/prescient
 show_downloads: false
+markdown: GFM
 navbar_items:
   - title: Home
     url: /
@@ -14,15 +15,3 @@ navbar_items:
     url: /analysis
   - title: Paper
     url: /paper
-
-atom:
-  buildCommand:
-    - jekyll
-    - build
-    - --option
-    - --this
-  buildEnv:
-    JEKYLL_ENV: development
-  postDirs:
-    - _newsletters
-  defaultPostDir: _drafts
