@@ -1,3 +1,30 @@
-<header class="page-header" role="banner">
+<!-- <header class="page-header" role="banner">
+  <div class="wrapper">
     <h1 class="project-name">{{default: site.github.repository_name-site.title}}</h1>
-</header>
+    <nav class="site-nav">
+      {% for link in site.data.navigation.main %}
+        {% if link.url contains "http" %}
+          {% assign url = link.url %}
+        {% else %}
+          {% assign url = link.url | relative_url %}
+        {% endif %}
+        <a class="page-link" href="{{ url }}">{{ link.title }}</a>
+      {% endfor %}
+  </div>
+</header> -->
+<div class="container-fluid">
+<nav class="navbar sticky-top navbar-expand" style="background-color: FloralWhite">
+  <a class="navbar-brand" href="{{ site.baseurl }}/index">prescient</a>
+    <h1 class="project-name">{{default: site.github.repository_name-site.title}}</h1>
+    <div class="collapse navbar-collapse col-sm-4" id="navbarTogglerDemo02">
+      {% for link in site.data.navigation.main %}
+        {% if link.url contains "http" %}
+          {% assign url = link.url %}
+        {% else %}
+          {% assign url = link.url | relative_url %}
+        {% endif %}
+          <a style="color: #d64e8a" class="nav-link" href="{{ url }}">{{ link.title }}</a>
+      {% endfor %}
+  </div>
+</nav>
+</div>

@@ -2,13 +2,10 @@
 <html lang="{{ site.lang | default: " en-US" }}">
 {% include head.html %}
 <script type="text/x-mathjax-config">
-
  MathJax.Hub.Config({
     showProcessingMessages: false,
     tex2jax: { inlineMath: [['$','$'],['\\(','\\)']] }
   });
-
-
 
 </script>
 
@@ -16,7 +13,7 @@
         type="text/javascript"></script>
 
 <body data-spy="scroll" data-target="#toc">
-{% include navbar.html %}
+<!-- {% include navbar.html %} -->
 
 {% unless page.noheader %}
 {% include header.html %}

@@ -1,0 +1,52 @@
+---
+title: Quickstart
+noheader: false
+permalink: quickstart/
+layout: document
+location: Quickstart
+---
+
+<h2>Introduction</h2>
+<p>Here, we provide the path of least resistance (the command-line interface)
+  to training a PRESCIENT model and running perturbational analyses.To install PRESCIENT refer to
+  the <a href="{{ site.baseurl }}/index">homepage.</a></p>
+
+
+<h2>Create PRESCIENT data file</h2>
+<p>
+  First, we recomment looking at <a href="{{ site.baseurl }}/file_formats">how to prepare inputs for PRESCIENT.</a>
+  Once you have your scRNA-seq data in an accepted format, run the following to estimate growth rates and create a <a href="{{ site.baseurl }}/file_formats/">PRESCIENT training pyTorch object</a>:
+</p>
+  <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+    <code>prescient data -d your_data.csv -o /out/ --tp_col "tp" --celltype_col "annotation" --growth_annotation /prescient/data/gtf/ </code>
+  </div>
+<br>
+
+<h2>Train PRESCIENT model</h2>
+<p>To train a PRESCIENT model, you need access to GPU resources. If you are using a GPU with CUDA support, default commands will work.
+If you need access to GPU resources, please refer to <a href="{{ site.baseurl }}/cloud">accessing cloud resources.</a> </p>
+
+<p>Next, train a basic PRESCIENT model with default parameters with the following command:</p>
+
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+  <code>prescient train -i data.pt -o ./out_dir/ --device 0</code>
+</div>
+
+<p>For more control over model architectures and hyperparameters as well as validation/testing of models via interpolation,
+please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+
+<br>
+
+<h2>Simulate trajectories</h2>
+<p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate and visualize trajectories of cells.
+To do so, run the <b>simulate</b> command line functions. In the following example, the function will randomly sample 50 cells at
+the first provided timepoint and simulate forward to the final timepoint:</p>
+
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+  <code>prescient simulate -i data.pt -o ./out_dir/ --device 0 --num_cells 50</code>
+</div>
+<p>This will produce a PRESCIENT simulation object</p>
+
+<p>For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+
+<h2>Run perturbation simulations</h2>

@@ -1,3 +1,9 @@
 ---
 ---
 @import "{{ site.theme }}";
+
+.navbar-right {
+  float: center;
+}
+
+a { color: hotpink; } /* CSS link color */

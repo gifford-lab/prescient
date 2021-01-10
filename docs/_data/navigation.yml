@@ -1,0 +1,11 @@
+main:
+  - title: "About"
+    url: /about/
+  - title: "Quickstart"
+    url: /quickstart/
+  - title: "Inputs"
+    url: /file_formats/
+  - title: "Documentation"
+    url: /document/
+  - title: "Dashboard"
+    url: /dashboard/
