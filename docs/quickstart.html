@@ -10,43 +10,59 @@ location: Quickstart
 <p>Here, we provide the path of least resistance (the command-line interface)
   to training a PRESCIENT model and running perturbational analyses.To install PRESCIENT refer to
   the <a href="{{ site.baseurl }}/index">homepage.</a></p>
-
-
+  
 <h2>Create PRESCIENT data file</h2>
-<p>
-  First, we recomment looking at <a href="{{ site.baseurl }}/file_formats">how to prepare inputs for PRESCIENT.</a>
-  Once you have your scRNA-seq data in an accepted format, run the following to estimate growth rates and create a <a href="{{ site.baseurl }}/file_formats/">PRESCIENT training pyTorch object</a>:
-</p>
-  <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-    <code>prescient data -d your_data.csv -o /out/ --tp_col "tp" --celltype_col "annotation" --growth_annotation /prescient/data/gtf/ </code>
-  </div>
-<br>
-
-<h2>Train PRESCIENT model</h2>
-<p>To train a PRESCIENT model, you need access to GPU resources. If you are using a GPU with CUDA support, default commands will work.
-If you need access to GPU resources, please refer to <a href="{{ site.baseurl }}/cloud">accessing cloud resources.</a> </p>
-
-<p>Next, train a basic PRESCIENT model with default parameters with the following command:</p>
-
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-  <code>prescient train -i data.pt -o ./out_dir/ --device 0</code>
+<p>
+  First, we recommend looking at <a href="{{ site.baseurl }}/file_formats">how to prepare inputs for PRESCIENT</a>
+  and bring your scRNA-seq to an acceptable format for PRESCIENT.
+<p class="list-group-item list-group-item-action home-list-item">
+ Run the following to estimate growth rates and create a <a href="{{ site.baseurl }}/file_formats/">PRESCIENT training pyTorch object</a>:
+<br>
+    <code>prescient data -d your_data.csv -o /out/ --tp_col "tp" --celltype_col "annotation" --growth_annotation /prescient/data/gtf/ </code>
+<br>
+</p>
 </div>
 
-<p>For more control over model architectures and hyperparameters as well as validation/testing of models via interpolation,
+<h2>Train PRESCIENT model</h2>
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+<p>To train a PRESCIENT model, you need access to GPU resources. If you are using a GPU with CUDA support, default commands will work.
+If you need access to GPU resources, please refer to <a href="{{ site.baseurl }}/cloud">accessing cloud resources.</a>
+<br>
+<p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command:<br>
+  <code>prescient train -i data.pt -o ./out_dir/ --device 0</code>
+</p>
+<br>
+<p>
+For more control over model architectures and hyperparameters as well as validation/testing of models via interpolation,
 please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+</div>
 
+</div>
 <br>
 
+
 <h2>Simulate trajectories</h2>
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate and visualize trajectories of cells.
 To do so, run the <b>simulate</b> command line functions. In the following example, the function will randomly sample 50 cells at
 the first provided timepoint and simulate forward to the final timepoint:</p>
-
-<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-  <code>prescient simulate -i data.pt -o ./out_dir/ --device 0 --num_cells 50</code>
-</div>
-<p>This will produce a PRESCIENT simulation object</p>
-
+<p class="list-group-item list-group-item-action home-list-item">
+<code>prescient simulate -i data.pt -o ./out_dir/ --device 0 --num_cells 50 </code>
+</p>
+<p>This will produce a PRESCIENT simulation object containing the following:</p>
+<ul>
+  <li>"simulation": generated cells of simulated trajectory</li>
+  <li>"labels": cell type classification of each cell along simulated trajectory</li>
+</ul>
 <p>For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+</div>
+
 
 <h2>Run perturbation simulations</h2>
+
+
+<p>This will produce a PRESCIENT simulation object containing the following:</p>
+<ul>
+  <li>"perturbed_genes": list of genes perturbed</li>
+</ul>
