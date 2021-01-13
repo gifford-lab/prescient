@@ -13,7 +13,7 @@ PRESCIENT takes as input longitudinal scRNA-seq data. For training, all that is 
 A post-processed gene expression file in .csv, .tsv, or .txt in the following format will work to create a PRESCIENT data object:
 
 | id     	| gene_1 	| gene_2 	| gene_3 	| ... 	| gene_n 	|
-|--------	|--------	|--------	|--------	|-----	|--------	|
+|:--------	|:--------	|:--------	|:--------	|:-----	|:--------	|
 | cell_1 	| 0.0    	| 0.121  	| 0.0    	|     	| 0.0    	|
 | cell_2 	| 0.234  	| 0.0    	| 0.0    	|     	| 0.0    	|
 | cell_3 	| 0.0    	| 0.0    	| 0.0    	|     	| 1.2    	|

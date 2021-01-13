@@ -6,11 +6,11 @@ layout: document
 location: Quickstart
 ---
 
-<h2>Introduction</h2>
+<h2>Quickstart</h2>
 <p>Here, we provide the path of least resistance (the command-line interface)
-  to training a PRESCIENT model and running perturbational analyses.To install PRESCIENT refer to
+  to training a PRESCIENT model and running perturbational analyses. To install PRESCIENT refer to
   the <a href="{{ site.baseurl }}/index">homepage.</a></p>
-  
+
 <h2>Create PRESCIENT data file</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>
@@ -23,7 +23,7 @@ location: Quickstart
 <br>
 </p>
 </div>
-
+<br>
 <h2>Train PRESCIENT model</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>To train a PRESCIENT model, you need access to GPU resources. If you are using a GPU with CUDA support, default commands will work.
@@ -45,9 +45,10 @@ please refer to <a href="{{ site.baseurl }}/command-line interface">CLI document
 <h2>Simulate trajectories</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate and visualize trajectories of cells.
-To do so, run the <b>simulate</b> command line functions. In the following example, the function will randomly sample 50 cells at
-the first provided timepoint and simulate forward to the final timepoint:</p>
+To do so, run the <b>simulate</b> command line functions.</p>
 <p class="list-group-item list-group-item-action home-list-item">
+In the following example, the function will randomly sample 50 cells at
+ the first provided timepoint and simulate forward to the final timepoint:
 <code>prescient simulate -i data.pt -o ./out_dir/ --device 0 --num_cells 50 </code>
 </p>
 <p>This will produce a PRESCIENT simulation object containing the following:</p>
@@ -58,11 +59,24 @@ the first provided timepoint and simulate forward to the final timepoint:</p>
 <p>For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
 </div>
 
-
+<br>
 <h2>Run perturbation simulations</h2>
+
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+<p>
+  One of the advantages of training a PRESCIENT model is the ability to simulate the trajectory of out-of-sample
+  or <b>perturbed</b> initial cells.
+</p>
+<p class="list-group-item list-group-item-action home-list-item">
+
+<code>prescient perturb -i data.pt -o ./out_dir/ --genes "YourFavoriteGene(s)" --device 0</code>
+</p>
 
 
 <p>This will produce a PRESCIENT simulation object containing the following:</p>
 <ul>
   <li>"perturbed_genes": list of genes perturbed</li>
+  <li>"unperturbed_sim": PC coordinates of unperturbed simulated trajectory</li>
+  <li>"perturbed_sim": PC coordinates of perturbed simulated trajectory</li>
 </ul>
+</div>
