@@ -26,7 +26,7 @@ import sklearn.decomposition
 from model import *
 from util import *
 
-def train(args, init_task):
+def run(args, init_task):
 
     # ---- initialize
 

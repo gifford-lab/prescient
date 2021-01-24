@@ -10,3 +10,14 @@ def plot_trajectory():
 
 def make_trajectory_animation():
     pass
+
+def plot_fate_streamplot():
+    pass
+
+
+def main():
+
+    if args.plot == "interpolation":
+        pass
+
+    elif args.plot == "trajectory":

@@ -3,7 +3,7 @@
 from prescient.commands import *
 
 def main():
-    command_list = [data, train, simulate, perturb, interpolate]
+    command_list = [data, train, simulate, perturb, evaluate_models]
     tool_parser = argparse.ArgumentParser(description='Run a prescient command')
     command_list_strings = list(map(lambda x: x.__name__[len('prescient.cmd.'):], command_list))
     tool_parser.add_argument('command', help='prescient command', choices=command_list_strings)
