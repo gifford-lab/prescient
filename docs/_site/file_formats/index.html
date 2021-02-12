@@ -1,0 +1,36 @@
+<h1 id="file-formats">File formats</h1>
+
+<p>PRESCIENT takes as input longitudinal scRNA-seq data. For training, all that is needed is normalized gene expression, time-point labels, and cell type annotations. These inputs are used to generate a PRESCIENT data file using <code class="language-plaintext highlighter-rouge">data.py</code>. Below, we describe accepted formatting for inputs. For pre-processing, we recommend using Seurat or scanpy. PRESCIENT accepts the following formats: <strong>.csv</strong>, <strong>.tsv</strong>, <strong>.txt</strong>, <strong>.h5ad</strong> of a scanpy anndata object, or an <strong>.rds</strong> file of a Seurat object.</p>
+
+<h2 id="csv-tsv-txt">CSV, TSV, TXT</h2>
+<p>A post-processed gene expression file in .csv, .tsv, or .txt in the following format will work to create a PRESCIENT data object:
+| id     	| gene_1 	| gene_2 	| gene_3 	| … 	| gene_n 	|
+|——–	|——–	|——–	|——–	|—–	|——–	|
+| cell_1 	| 0.0    	| 0.121  	| 0.0    	|     	| 0.0    	|
+| cell_2 	| 0.234  	| 0.0    	| 0.0    	|     	| 0.0    	|
+| cell_3 	| 0.0    	| 0.0    	| 0.0    	|     	| 1.2    	|</p>
+
+<h2 id="scanpy-anndata">Scanpy AnnData</h2>
+<p>If pre-processing is done with Scanpy, you can directly provide the AnnData object to the PRESCIENT <code class="language-plaintext highlighter-rouge">data.py</code> command line function. The AnnData object should contain the following information:</p>
+<ul>
+  <li>
+    <p><strong>adata.X</strong> should contain a numpy ndarray, pandas DataFrame, or sparse matrix of gene expression with n_cells x n_features:
+| id     	| gene_1 	| gene_2 	| gene_3 	| … 	| gene_n 	|
+|——–	|——–	|——–	|——–	|—–	|——–	|
+| cell_1 	| 0.0    	| 0.121  	| 0.0    	|     	| 0.0    	|
+| cell_2 	| 0.234  	| 0.0    	| 0.0    	|     	| 0.0    	|
+| cell_3 	| 0.0    	| 0.0    	| 0.0    	|     	| 1.2    	|</p>
+  </li>
+  <li>
+    <p><strong>adata.obs</strong> should contain metadata of time point labels (as integers) and cell type annotations, for example:
+| id     	| timepoint 	| cell_type        	|
+|——–	|———–	|——————	|
+| cell_1 	| 0         	| undifferentiated 	|
+| cell_2 	| 1         	| neutrophil       	|
+| cell_3 	| 2         	| monocyte         	|</p>
+  </li>
+</ul>
+
+<h2 id="seurat-object">Seurat object</h2>
+<p>If pre-processing is done with Seurat, you can directly provide the Seurat object as <strong>.rds</strong> or convert it to a <strong>.csv</strong> and provide the file as directed in <a href="##CSV, TSV, TXT">CSV</a>
+‘’</p>
