@@ -9,6 +9,7 @@ def main():
     parser.add_argument("--model_path", required=True)
     parser.add_argument("--seed", default=1, required=True)
     parser.add_argument("--num_sims", default=10)
+    parser.add_argument("--num_cells", default=200, help="Number of cells per simulation.")
     parser.add_argument("--num_steps", default=None, required=False)
     parser.add_argument("-o", "--path_to_output", default=None)
 
@@ -30,7 +31,7 @@ def main():
         num_steps = int(np.round(data_pt["y"] / config.train_dt))
 
     # simulate forward
-    sims = simulate(data_pt, model, config, num_sims, num_cells, num_steps, tp=None, celltype=None, gpu=None)
+    sims = simulate(data_pt, model, config, args.num_sims, args.num_cells, num_steps, tp=None, celltype=None, gpu=None)
 
     # write simulation data to file
     torch.save({

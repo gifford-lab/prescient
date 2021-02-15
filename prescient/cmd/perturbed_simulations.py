@@ -1,6 +1,7 @@
 import argparse
 import prescient.simulate as simulate
 from prescient.train.model import *
+import prescient.perturb
 
 
 def main():
@@ -30,7 +31,7 @@ def main():
     model.to(device)
 
     # generate perturbations PRESCIENT data file
-    
+
 
     # Either use assigned number of steps or calculate steps, both using the stepsize used for training
     if args.num_steps == None:
@@ -38,7 +39,7 @@ def main():
 
     # simulate forward
     sims = simulate(data_pt, model, config, num_sims, num_cells, num_steps, tp=None, celltype=None, gpu=None)
-
+    perturbed_sims = simulate(perturb_pt, model, config, num_sims, num_cells)
     torch.save({"perturbed_genes": args.perturb_genes,
                 "unperturbed_sim": unperturbed_sims,
                 "unperturbed_labs": unperturbed_classes,

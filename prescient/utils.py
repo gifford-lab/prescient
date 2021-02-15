@@ -1,9 +1,23 @@
-
-
+import os
+import numpy as np
+import matplotlib.pyplot as plt
 from annoy import AnnoyIndex
+
+def plot_interpolation():
+    pass
+
+def plot_trajectory():
+    pass
+
+def make_trajectory_animation():
+    pass
+
+def plot_fate_streamplot():
+    pass
 
 def train_ann(data_pt):
     yc = data_pt['celltype']
+    xtr = data_pt["xp"]
     n_trees = 10
     n_neighbors = 20
     t = annoy.AnnoyIndex(xtr.shape[1], 'euclidean')
@@ -12,11 +26,11 @@ def train_ann(data_pt):
     t.build(n_trees)
     return t
 
-def classify_cells(args, all_sims_timepoints, ann_dir, std):
+def classify_cells(args, data_pt, all_sims_timepoints, ann_dir):
     n_neighbors=10
-    meta = std["meta"]
-    yc = meta["Annotation"]
-    xp_df = pd.DataFrame(std["xp_std"], yc)
+    meta = data_pt["meta"]
+    yc = data_pt["celltype"]
+    xp_df = pd.DataFrame(data_pt["xp"], yc)
     u = AnnoyIndex(all_sims_timepoints[0][0].shape[1], 'euclidean')  # all_sims_timepoints[0][0][0].shape[1], 'euclidean')
     u.load(ann_dir)
     yp_all=[]
