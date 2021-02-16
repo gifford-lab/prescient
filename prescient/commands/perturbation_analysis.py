@@ -20,6 +20,10 @@ def main():
     parser.add_argument("--device", default=None, required=False)
     parser.add_argument("--out_path", default=None, required=True)
 
+    # subsetting parameters
+    parser.add_argument("--celltype", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
+    parser.add_argument("--tp", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
+
     # load data
     data_pt = torch.load(args.data_path)
     x = data_pt["x"]
