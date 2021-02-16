@@ -2,14 +2,13 @@ import os
 import numpy as np
 import sklearn
 
-def perturb(perturb_genes, std, pca, z_score):
-    x=std["data"]
+def perturb(perturb_genes, x, pca, z_score):
     scaler=sklearn.preprocessing.StandardScaler()
     x=scaler.fit_transform(x)
     # x_ is perturbed expression profile
     x_ = x
 
-    genes = std["genes"]
+    genes = data_pt["genes"]
     perturb_genes=perturb_genes.split(",")
     idx=[]
     # perturb genes that appear in highly variable gene list

@@ -14,19 +14,19 @@ import sklearn
 from types import SimpleNamespace
 from collections import Counter
 
-def simulate(data_pt, model, config, num_sims, num_cells, num_steps, tp=None, celltype=None, gpu=None):
+def simulate(xp, y, celltype, w, model, config, num_sims, num_cells, num_steps, tp=None, celltype=None, device=None):
     """
     Use trained PRESCIENT model to simulate cell trajectories with arbitrary initializations.
     """
     # load data
-    xp = torch.from_numpy(data_pt["xp"])
+    xp = torch.from_numpy(xp)
 
     # make meta dataframe
-    dict = {"tp": data_pt["y"], "celltype": data_pt["celltype"], "w": data_pt["w"]}
+    dict = {"tp": y, "celltype": celltype, "w": data_pt["w"]}
     meta = pd.DataFrame(dict)
 
     # torch parameters
-    if args.gpu not None:
+    if device not None:
         device = torch.device('cuda:{}'.format(args.gpu))
     else:
         device = torch.device('cpu')
@@ -44,7 +44,7 @@ def simulate(data_pt, model, config, num_sims, num_cells, num_steps, tp=None, ce
             idx = meta.sample(num_cells, weights="w")
 
         # map tensor to device
-        xp_i = x[idx].to(device)
+        xp_i = xp[idx].to(device)
 
         # store inital value
         xp_i_ = x_i.detach().cpu().numpy()

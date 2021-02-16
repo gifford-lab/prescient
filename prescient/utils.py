@@ -3,16 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from annoy import AnnoyIndex
 
-def plot_interpolation():
+def plot_interpolation(): # TO-DO
     pass
 
-def plot_trajectory():
+def plot_trajectory(): # TO-DO
     pass
 
-def make_trajectory_animation():
+def make_trajectory_animation(): # TO-DO
     pass
 
-def plot_fate_streamplot():
+def plot_fate_streamplot() # TO-DO
     pass
 
 def train_ann(data_pt):
