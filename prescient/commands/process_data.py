@@ -5,6 +5,8 @@ import argparse
 import pyreadr
 import scanpy as sc
 import anndata
+import sklearn
+import umap
 
 import annoy
 import torch
@@ -63,31 +65,22 @@ def read_data(args):
     - Must be a csv with format n_cells x n_genes with normalized (not scaled!) expression.
     - Must have meta data with n_cells x n_metadata and include timepoints and assigned cell type labels.
 
-
     Inputs:
     -------
     path: path to csv or rds file of processed scRNA-seq dataset.
     meta: path to metadata csv.
     """
-    ext = os.path.splitext(data_path)
+    ext = os.path.splitext(args.data_path)[1]
     # load in expression dataframe
-    if ext == ".txt":
-        if args.meta_path == None:
-            raise ValueError("Must provide path to metadata with timepoint and celltype.")
-        expr = pd.read_csv(args.data_path)
-        genes = expr.columns
-        meta = pd.read_csv(args.meta_path)
-        y = meta[args.tp_col].values.astype(int)
-        celltypes = meta[args.celltype_col].values
-
-    if ext == ".csv":
+    if ext == ".csv" or ext == ".txt" or ext == ".tsv":
         if args.meta_path == None:
             raise ValueError("Must provide path to metadata with timepoint and ")
-        expr = pd.read_csv(args.data_path)
+        expr = pd.read_csv(args.data_path, index_col=0)
         meta = pd.read_csv(args.meta_path)
         genes = expr.columns
+        expr = expr.to_numpy()
         y = meta[args.tp_col].values.astype(int)
-        celltypes = meta[args.celltype_col].values
+        celltype = meta[args.celltype_col].values
 
     # todo: implement Scanpy anndata functionality
     if ext == ".h5ad":
@@ -100,16 +93,49 @@ def read_data(args):
     # transformations
     scaler = sklearn.preprocessing.StandardScaler()
     pca = sklearn.decomposition.PCA(n_components = args.num_pcs)
-    um = umap.UMAP(n_components = 2, metric = 'euclidean', n_neighbors = args.num_neighbors)
+    um = umap.UMAP(n_components = 2, metric = 'euclidean', n_neighbors = args.num_neighbors_umap)
 
-    if args.task == "train":
-        x = scaler.fit_transform(expr)
-        xp = pca.fit_transform(x)
-        xu = um.fit_transform(xp)
+    x = scaler.fit_transform(expr)
+    xp = pca.fit_transform(x)
+    xu = um.fit_transform(xp)
 
     return x, xp, xu, y, pca, um, celltype, genes
 
-def main():
+def create_parser():
+    parser = argparse.ArgumentParser()
+
+    # file I/0
+    parser.add_argument('-d', '--data_path', type=str, required=True,
+    help="Path to dataframe of expression values.")
+    parser.add_argument('-o', '--out_dir', type=str, required=True,
+    help="Path to output directory to store final PRESCIENT data file.")
+    parser.add_argument('-m', '--meta_path', type=str, required=False,
+    help="Path to metadata containing timepoint and celltype annotation data.")
+
+    # column names
+    parser.add_argument('--tp_col', type=str, required=False,
+    help="Column name of timepoint feature in metadate provided as string.")
+    parser.add_argument('--celltype_col', type=str, required=False,
+    help="Column name of celltype feature in metadata provided as string.")
+
+    # dimensionality reduction growth_parameters
+    parser.add_argument('--num_pcs', type=int, default=50, required=False,
+    help="Define number of PCs for training.")
+    parser.add_argument('--num_neighbors_umap', type=int, default=10, required=False,
+    help="Define number of neighbors for UMAP trasformation (UMAP used only for visualization.)")
+
+    # proliferation scores
+    parser.add_argument('--growth_path', type=str,
+    help="Path to torch pt file containg pre-computed growth weights.")
+
+    # if no growth scores available
+    parser.add_argument('--estimate_growth', type=bool, default=False,
+    help="Set estimate_growth to True if no growth_path provided.")
+    parser.add_argument('--growth_annotation', type=str)
+    parser.add_argument('--growth_parameters', type=str, required=False)
+    return parser
+
+def main(args):
     """
     Outputs:
     --------
@@ -125,29 +151,6 @@ def main():
         |- w: growth weights
         |- celltype: vector of celltype labels
     """
-    parser = argparse.ArgumentParser()
-
-    # file I/0
-    parser.add_argument('-d', '--data_path', type=str, required=True)
-    parser.add_argument('-o', '--out_dir', type=str, required=True)
-    parser.add_argument('-m', '--meta_path', type=str, required=False)
-
-    # column names
-    parser.add_argument('--tp_col', type=str, required=False)
-    parser.add_argument('--celltype_col', type=str, required=False)
-
-    # dimensionality reduction growth_parameters
-    parser.add_argument('--num_pcs', type=int, default=50, required=False)
-    parser.add_argument('--num_neighbors_umap', type=int, default=10, required=False)
-
-    # proliferation scores
-    parser.add_argument('--estimate_growth', type=bool, default=True)
-    parser.add_argument('--growth_annotation', type=str)
-    parser.add_argument('--growth_path', type=str)
-    parser.add_argument('--growth_parameters', type=str, required=False)
-
-    args = parser.parse_args()
-
     # throw early errors
     if "csv" in str(args.data_path).split('/')[-1] and (args.meta_path == None or args.tp_col == None or args.celltype_col == None):
         raise ValueError("If csv/tsv/txt provided, you must provide a path to metadata along with column name designations.")

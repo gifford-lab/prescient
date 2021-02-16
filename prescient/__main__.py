@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from .data import *
 from prescient.commands import *
 
 def main():
-    command_list = [data, train, simulate, perturbation_analysis]
-    tool_parser = argparse.ArgumentParser(description='Run a prescient command')
+    command_list = [process_data, train_model, simulate_trajectories, perturbation_analysis]
+    tool_parser = argparse.ArgumentParser(description='Run a prescient command.')
     command_list_strings = list(map(lambda x: x.__name__[len('prescient.commands.'):], command_list))
     tool_parser.add_argument('command', help='prescient command', choices=command_list_strings)
     tool_parser.add_argument('command_args', help='command arguments', nargs=argparse.REMAINDER)
@@ -19,7 +18,7 @@ def main():
     cmd.main(args)
 
 if __name__ == '__main__':
-    # args = sys.argv
+    args = sys.argv
     # if "--help" in args or len(args) == 1:
     #     print("CVE")
     main()

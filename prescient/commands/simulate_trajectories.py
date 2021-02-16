@@ -3,7 +3,7 @@ import torch
 import prescient.simulate as simulate
 from prescient.train.model import *
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--data_path", required=True, help="Path to PRESCIENT data file stored as a torch pt.")
     parser.add_argument("--model_path", required=True)
@@ -17,7 +17,10 @@ def main():
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
     parser.add_argument("--tp", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
 
-    parser.add_argument("-o", "--path_to_output", default=None)
+    parser.add_argument("-o", "--outfile", default=None)
+    return parser
+
+def main(args):
 
     # load data
     data_pt = torch.load(args.data_path)
@@ -42,7 +45,7 @@ def main():
     # write simulation data to file
     torch.save({
     "sims": sims
-    }, args.path_to_output)
+    }, args.outfile)
 
 if __name__=="__main__":
     main()

@@ -96,7 +96,7 @@ def train_init(args):
 
     return x, y, w, config
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--no-cuda', action = 'store_true')
     parser.add_argument('--device', default = 7, type = int)
@@ -130,7 +130,9 @@ def main():
     # -- run options
     parser.add_argument('--train', action = 'store_true')
     parser.add_argument('--config')
-    args = parser.parse_args()
+    return parser
+
+def main(args):
 
     if args.pretrain and args.train:
         train.run(args, train_init)

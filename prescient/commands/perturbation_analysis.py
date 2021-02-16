@@ -4,7 +4,7 @@ from prescient.train.model import *
 import prescient.perturb
 
 
-def main():
+def create_parser():
     parser = argparse.ArgumentParser()
 
     # perturbation parameters
@@ -18,11 +18,15 @@ def main():
     parser.add_argument("--num_sims", default=10)
     parser.add_argument("--num_steps", default=None, required=False)
     parser.add_argument("--device", default=None, required=False)
-    parser.add_argument("--out_path", default=None, required=True)
+    parser.add_argument("-o", "--outfile", default=None, required=True)
 
     # subsetting parameters
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
     parser.add_argument("--tp", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
+    return parser
+
+
+def main(args):
 
     # load data
     data_pt = torch.load(args.data_path)
@@ -60,7 +64,7 @@ def main():
     torch.save({"perturbed_genes": args.perturb_genes,
                 "unperturbed_sim": unperturbed_sims,
                 "perturbed_sim": perturbed_sims},
-               args.out_path)
+               args.outfile)
 
 
 if __name__=="__main__":
