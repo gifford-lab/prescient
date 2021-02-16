@@ -1,9 +1,8 @@
 import os
 import numpy as np
 import pandas as pd
-import pyreadr
 import argparse
-
+import pyreadr
 import scanpy as sc
 import anndata
 
@@ -159,9 +158,9 @@ def main():
         w_pt = torch.load(args.growth_path)
         w = w_pt["w"]
     else:
-        if args.growth_parameters not None:
+        if args.growth_parameters != None:
             growth_args = str(args.growth_parameters).split(',')
-            w = estimate_growth(x, xp, genes, args.growth_annotation L0=growth_args[0], L=growth_args[1], k=growth_args[2])
+            w = estimate_growth(x, xp, genes, args.growth_annotation, L0=growth_args[0], L=growth_args[1], k=growth_args[2])
         else:
             w = estimate_growth(x, xp, genes, y, args.growth_annotation)
 
@@ -169,7 +168,7 @@ def main():
     torch.save({
      "x":x,
      "xp":xp,
-     "xu",xu,
+     "xu": xu,
      "y": y,
      "genes": genes,
      "pca": pca,

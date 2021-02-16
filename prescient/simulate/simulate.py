@@ -14,7 +14,7 @@ import sklearn
 from types import SimpleNamespace
 from collections import Counter
 
-def simulate(xp, y, celltype, w, model, config, num_sims, num_cells, num_steps, tp=None, celltype=None, device=None):
+def simulate(xp, y, celltype_annotations, w, model, config, num_sims, num_cells, num_steps, tp=None, celltype_subset=None, device=None):
     """
     Use trained PRESCIENT model to simulate cell trajectories with arbitrary initializations.
     """
@@ -22,11 +22,11 @@ def simulate(xp, y, celltype, w, model, config, num_sims, num_cells, num_steps, 
     xp = torch.from_numpy(xp)
 
     # make meta dataframe
-    dict = {"tp": y, "celltype": celltype, "w": data_pt["w"]}
+    dict = {"tp": y, "celltype": celltype_annotations, "w": data_pt["w"]}
     meta = pd.DataFrame(dict)
 
     # torch parameters
-    if device not None:
+    if device != None:
         device = torch.device('cuda:{}'.format(args.gpu))
     else:
         device = torch.device('cpu')
@@ -34,12 +34,12 @@ def simulate(xp, y, celltype, w, model, config, num_sims, num_cells, num_steps, 
     all_sims = []
     for _ in range(num_sims):
         # sample cells based on timepoint or celltype or both
-        if args.tp not None and args.celltype not None:
-            idx = pd.DataFrame(meta[(meta["tp"]==args.tp) & (meta["celltype"]==args.celltype)]).sample(num_cells, weights="w")
-        elif args.tp not None:
+        if args.tp != None and args.celltype_subset != None:
+            idx = pd.DataFrame(meta[(meta["tp"]==args.tp) & (meta["celltype"]==args.celltype_subset)]).sample(num_cells, weights="w")
+        elif args.tp != None:
             idx = pd.DataFrame(meta[meta["tp"]==args.tp]).sample(num_cells, weights="w")
-        elif args.celltype not None:
-            idx = pd.DataFrame(meta[meta["celltype"]==args.celltype]).sample(num_cells, weights="w")
+        elif args.celltype_subset != None:
+            idx = pd.DataFrame(meta[meta["celltype"]==args.celltype_subset]).sample(num_cells, weights="w")
         else:
             idx = meta.sample(num_cells, weights="w")
 

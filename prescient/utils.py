@@ -12,7 +12,7 @@ def plot_trajectory(): # TO-DO
 def make_trajectory_animation(): # TO-DO
     pass
 
-def plot_fate_streamplot() # TO-DO
+def plot_fate_streamplot(): # TO-DO
     pass
 
 def train_ann(data_pt):

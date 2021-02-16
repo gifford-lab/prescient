@@ -14,7 +14,7 @@ def main():
     parser.add_argument("--device", default=None, required=False)
 
     # subsetting parameters
-    parser.add_argument("--celltype", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
+    parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
     parser.add_argument("--tp", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
 
     parser.add_argument("-o", "--path_to_output", default=None)
@@ -37,7 +37,7 @@ def main():
         num_steps = int(np.round(data_pt["y"] / config.train_dt))
 
     # simulate forward
-    sims = simulate(data_pt["xp"], data_pt["y"], data_pt["celltype"], data_pt["w"], model, config, args.num_sims, args.num_cells, num_steps, tp=args.tp, celltype=args.celltype, device=args.device)
+    sims = simulate(data_pt["xp"], data_pt["y"], data_pt["celltype"], data_pt["w"], model, config, args.num_sims, args.num_cells, num_steps, tp=args.tp, celltype_subset=args.celltype_subset, device=args.device)
 
     # write simulation data to file
     torch.save({

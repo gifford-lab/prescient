@@ -23,8 +23,8 @@ import sys
 
 import sklearn.decomposition
 
-from model import *
-from util import *
+from .model import *
+from .util import *
 
 def run(args, init_task):
 

@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--out_path", default=None, required=True)
 
     # subsetting parameters
-    parser.add_argument("--celltype", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
+    parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata")
     parser.add_argument("--tp", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
 
     # load data
@@ -54,14 +54,12 @@ def main():
 
     # simulate forward
     sims = simulate(xp, y, celltype_annotation, w, model, config, num_sims, num_cells, num_steps, tp=args.tp, celltype=args.celltype, gpu=args.device)
-    perturbed_sims = simulate(xp_perturb, y, celltype_annotation, perturb_pt, model, config, num_sims, num_cells, tp=args.tp, celltype=args.celltype, gpu=args.device)
+    perturbed_sims = simulate(xp_perturb, y, celltype_annotation, perturb_pt, model, config, num_sims, num_cells, tp=args.tp, celltype=args.celltype_subset, gpu=args.device)
 
     # save PRESCIENT perturbation file
     torch.save({"perturbed_genes": args.perturb_genes,
                 "unperturbed_sim": unperturbed_sims,
-                "unperturbed_labs": unperturbed_classes,
-                "perturbed_sim": perturbed_sims,
-                "perturbed_labs": perturbed_classes},
+                "perturbed_sim": perturbed_sims},
                args.out_path)
 
 
