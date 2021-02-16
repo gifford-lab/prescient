@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="seqgra",
+    name="prescient",
     version=prescient.__version__,
     author="Sachit Saksena; Grace Hui-Ting Yeo",
     author_email="sachit@mit.edu",
