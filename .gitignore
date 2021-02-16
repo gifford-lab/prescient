@@ -68,3 +68,6 @@ venv.bak/
 .vscode
 
 tmp/
+.DS_Store
+
+experiments/
