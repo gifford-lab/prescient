@@ -1,13 +1,7 @@
 main:
-  - title: "About"
-    url: /about/
   - title: "Quickstart"
     url: /quickstart/
   - title: "Inputs"
     url: /file_formats/
   - title: "Documentation"
     url: /document/
-  - title: "Vignettes"
-    url: /vignettes/
-  - title: "Dashboard"
-    url: /dashboard/
