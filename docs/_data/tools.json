@@ -188,20 +188,6 @@
     "epilog": null,
     "params": [
       {
-        "name": "perturb_genes",
-        "default": null,
-        "choices": null,
-        "help": "Provide a gene or list of genes to be perturbed as a string (commas, no spaces). Must be in the feature set used to train models.",
-        "required": true
-    },
-    {
-      "name": "z_score",
-      "default": 5.0,
-      "choices": null,
-      "help": "Set magnitude of z_score perturbation.",
-      "required": true
-  },
-      {
         "name": "data_path",
         "default": null,
         "choices": null,
@@ -238,7 +224,7 @@
   },
   {
     "name": "num_steps",
-    "default": nulls,
+    "default": null,
     "choices": null,
     "help": "Number of steps forward in time. If not provided, steps will be calculated based on start and end point + train dt.",
     "required": false
@@ -285,6 +271,20 @@
     "name": "perturbation_analysis",
     "epilog": null,
     "params": [
+      {
+        "name": "perturb_genes",
+        "default": null,
+        "choices": null,
+        "help": "Provide a gene or list of genes to be perturbed as a string (commas, no spaces). Must be in the feature set used to train models.",
+        "required": true
+    },
+    {
+      "name": "z_score",
+      "default": 5.0,
+      "choices": null,
+      "help": "Set magnitude of z_score perturbation.",
+      "required": true
+  },
       {
         "name": "data_path",
         "default": null,
