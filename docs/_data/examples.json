@@ -1,18 +1,18 @@
 {
   "process_data": {
     "text": "This command converts my_matrix.h5ad to txt format.",
-    "code": "my_matrix.h5ad --format txt"
+    "code": ""
   },
   "train_model": {
     "text": "This command computes gene set scores. See notebooks for an example of converting gene set scores to growth rates.",
-    "code": "--matrix data/ExprMatrix.h5ad --method mean_z_score --gene_sets data/gene_sets.gmx"
+    "code": ""
   },
   "simulate_trajectories": {
     "text": "This command generates simulated trajectories from randomly initialized cells.",
-    "code": "--matrix data/ExprMatrix.var.genes.h5ad --cell_days data/cell_days.txt --cell_filter data/serum_cell_ids.txt --growth_iters 3 --cell_growth_rates data/growth_gs_init.txt --out tmaps/serum --verbose"
+    "code": ""
   },
   "perturbation_analysis": {
     "text": "This command runs perturbations of selected genes and simulates forward.",
-    "code": "--tmap tmaps/serum --cell_set data/major_cell_sets.gmt --day 18 --embedding data/fle_coords.txt --verbose"
+    "code": "e"
 }
 }
