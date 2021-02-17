@@ -15,3 +15,4 @@
     "text": "This command runs perturbations of selected genes and simulates forward.",
     "code": "--tmap tmaps/serum --cell_set data/major_cell_sets.gmt --day 18 --embedding data/fle_coords.txt --verbose"
 }
+}
