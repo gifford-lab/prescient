@@ -30,12 +30,12 @@ location: Quickstart
   please refer to Google Cloud Services or AWS documentation for running command line tools on VMs with cloud GPUs.
 <br>
 <p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command and the <code>data.pt</code> file from the <code>process_data</code> command:<br>
-  <code>prescient train_model -i /path/to/data.pt --out_dir ./experiments/</code>
+  <code>prescient train_model prescient train_model -i /path/to/data.pt --out_dir /experiments/ --weight_name 'kegg-growth'</code>
 </p>
 <br>
 <p>
-For more control over model architectures and hyperparameters as well as validation/testing of models via interpolation,
-please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+For more options to control model architecture and hyperparameters,
+please refer to <a href="{{ site.baseurl }}/documentation">CLI documentation.</a></p>
 </div>
 
 </div>
@@ -49,12 +49,11 @@ To do so, run the <b>simulate</b> command line functions.</p>
 <p class="list-group-item list-group-item-action home-list-item">
 In the following example, the function will randomly sample 50 cells at
  the first provided timepoint and simulate forward to the final timepoint:
-<code>prescient simulate -i data.pt -o ./out_dir/ --device 0 --num_cells 50 </code>
+ <code>prescient simulate_trajectories -i /path/to/data.pt --model_path /path/to/trained/model_directory --num_steps 10 -o /path/to/output_dir --seed 2</code>
 </p>
 <p>This will produce a PRESCIENT simulation object containing the following:</p>
 <ul>
-  <li>"simulation": generated cells of simulated trajectory</li>
-  <li>"labels": cell type classification of each cell along simulated trajectory</li>
+  <li>"sims": generated cells of simulated trajectory</li>
 </ul>
 <p>
   For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/documentation">documentation.</a>
@@ -71,8 +70,7 @@ In the following example, the function will randomly sample 50 cells at
   or <b>perturbed</b> initial cells.
 </p>
 <p class="list-group-item list-group-item-action home-list-item">
-
-<code>prescient perturb -i data.pt -o ./out_dir/ --genes "YourFavoriteGene(s)" --device 0</code>
+  <code>prescient perturbation_analysis prescient perturbation_analysis -i /path/to/data.pt -p 'GENE1,GENE2,GENE3' -z 5 --model_path /path/to/trained/model_directory --num_steps 10 --seed 2 -o /path/to/output_dir</code>
 </p>
 
 
