@@ -97,5 +97,4 @@ def get_growth_weights(x, xp, y, genes, gst, **kwargs):
         w = estimate_growth(x, xp, genes, args.growth_annotation, L0=growth_args[0], L=growth_args[1], k=growth_args[2])
     else:
         w = estimate_growth(x, xp, genes, y, args.growth_annotation)
-
     return weights

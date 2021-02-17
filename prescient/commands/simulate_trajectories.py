@@ -12,7 +12,7 @@ def create_parser():
     parser.add_argument("--num_sims", default=10, help="Number of simulations to run.")
     parser.add_argument("--num_cells", default=200, help="Number of cells per simulation.")
     parser.add_argument("--num_steps", default=None, required=False, help="Define number of forward steps of size dt to take.")
-    parser.add_argument("--gpu", default=None, required=False)
+    parser.add_argument("--gpu", default=None, required=False, help="If available, assign GPU device number.")
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata.")
     parser.add_argument("--tp_subset", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
     parser.add_argument("-o", "--out_path", required=True, default=None, help="Path to output directory.")
@@ -33,16 +33,13 @@ def main(args):
         device = torch.device('cpu')
 
     # load model
-    print(args.model_path)
     config_path = os.path.join(str(args.model_path), 'seed_{}/config.pt'.format(args.seed))
-    print(config_path)
     config = SimpleNamespace(**torch.load(config_path))
     net = AutoGenerator(config)
 
     train_pt = os.path.join(args.model_path, 'seed_{}/train.epoch_{}.pt'.format(args.seed, args.epoch))
     checkpoint = torch.load(train_pt, map_location=device)
     net.load_state_dict(checkpoint['model_state_dict'])
-
 
     net.to(device)
 
@@ -56,7 +53,7 @@ def main(args):
     out = traj.simulate(xp, data_pt["tps"], data_pt["celltype"], data_pt["w"], net, config, args.num_sims, args.num_cells, num_steps, device, args.tp_subset, args.celltype_subset)
 
     # write simulation data to file
-    out_path = os.path.join(args.out_path, args.model_path.split("/")[-1], 'seed_{}_train.epoch_{}_num.sims_{}_num.cells_{}_num.steps_{}_subsets_{}_{}.pt'.format(args.seed, args.epoch, args.num_sims, args.num_cells, num_steps, args.tp_subset, args.celltype_subset))
+    out_path = os.path.join(args.out_path, args.model_path.split("/")[-1], 'seed_{}_train.epoch_{}_num.sims_{}_num.cells_{}_num.steps_{}_subsets_{}_{}_simulation.pt'.format(args.seed, args.epoch, args.num_sims, args.num_cells, num_steps, args.tp_subset, args.celltype_subset))
     torch.save({
     "sims": out
     }, out_path)

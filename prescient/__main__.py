@@ -17,6 +17,8 @@ def main():
     args = parser.parse_args(command_args)
     cmd.main(args)
 
+
+
 if __name__ == '__main__':
     args = sys.argv
     # if "--help" in args or len(args) == 1:
