@@ -3,9 +3,11 @@
 
 # prescient
 Software for PRESCIENT (Potential eneRgy undErlying Single Cell gradIENTs), a generative model for modeling single-cell time-series.
-+ Documentation available at prescient.github.io.
 + Current paper version: https://www.biorxiv.org/content/10.1101/2020.08.26.269332v1
 + For paper pre-processing scripts, training bash scripts, pre-trained models, and visualization notebooks please visit https://github.com/gifford-lab/prescient-analysis.
+
+## Documentation
+Documentation is available at https://cgs.csail.mit.edu/prescient.
 
 <!-- ![trajectories_gif](docs/assets/gifs/trajectories.gif) -->
 
@@ -16,10 +18,6 @@ Software for PRESCIENT (Potential eneRgy undErlying Single Cell gradIENTs), a ge
 + numpy, scipy, pandas, sklearn, tqdm, annoy
 + scanpy, pyreadr, anndata
 + Recommended: An Nvidia GPU with CUDA support for GPU acceleration (see paper for more details on computational resources)
-
-## Documentation
-Documentation is available at https://cgs.csail.mit.edu/prescient.
-
 
 ## Bugs & Suggestions
 
