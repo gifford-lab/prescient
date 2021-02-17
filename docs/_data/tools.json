@@ -15,14 +15,178 @@
         "name": "out_dir",
         "default": null,
         "choices": null,
-        "help": "Directory to store outputs.",
+        "help": "Directory to store PRESCIENT torch object.",
         "required": true
+      },
+      {
+        "name": "meta_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to metadata CSV containing timepoint and celltype annotation data.",
+        "required": true
+      },
+      {
+        "name": "tp_col",
+        "default": null,
+        "choices": null,
+        "help": "Column name of timepoint feature in metadata provided as string.",
+        "required": false
+      },
+      {
+        "name": "celltype_col",
+        "default": null,
+        "choices": null,
+        "help": "Column name of timepoint feature in metadata provided as string.",
+        "required": false
+      },
+      {
+        "name": "num_pcs",
+        "default": null,
+        "choices": null,
+        "help": "Define number of PCs to compute for input to training.",
+        "required": false
+      },
+      {
+        "name": "num_neighbors_umap",
+        "default": null,
+        "choices": null,
+        "help": "Define number of neighbors for UMAP trasformation (UMAP used only for visualization.)",
+        "required": false
+      },
+      {
+        "name": "growth_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to torch pt file containg pre-computed growth weights. See vignette notebooks for generating growth rate vector.",
+        "required": false
       }
+
     ]
   },
   {
-    "desc": "Train a PRESCIENT model using a PRESCIENT file format as input.",
+    "desc": "Train a PRESCIENT model using a PRESCIENT data object as input.",
     "name": "train_model",
+    "epilog": null,
+    "params": [
+      {
+        "name": "data_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to PRESCIENT data torch object produced by process_data.",
+        "required": true
+    },
+    {
+      "name": "weight_name",
+      "default": null,
+      "choices": null,
+      "help": "Descriptive name of weight vector being used provided as string for model filename.",
+      "required": true
+  },
+  {
+    "name": "loss",
+    "default": "euclidean",
+    "choices": null,
+    "help": "Designate distance function for loss.",
+    "required": false
+  },
+  {
+    "name": "k_dim",
+    "default": 500,
+    "choices": null,
+    "help": "Designate activation function for layers of NN.",
+    "required": false
+  },
+  {
+    "name": "activation",
+    "default": "softplus",
+    "choices": null,
+    "help": "Designate hidden units of fully connected layers in model.",
+    "required": false
+  },
+  {
+    "name": "layers",
+    "default": 2,
+    "choices": null,
+    "help": "Number of layers for neural network parameterizing the potential function.",
+    "required": false
+  },
+  {
+    "name": "pretrain_lr",
+    "default": 1e-9,
+    "choices": null,
+    "help": "Learning rate for Adam optimizer during pretraining.",
+    "required": false
+  },
+  {
+    "name": "pretrain_epochs",
+    "default": 500,
+    "choices": null,
+    "help": "Number of epochs for pretraining with contrastive divergence.",
+    "required": false
+  },
+  {
+    "name": "train_epochs",
+    "default": 2500,
+    "choices": null,
+    "help": "Number of epochs for training.",
+    "required": false
+  },
+  {
+    "name": "train_lr",
+    "default": 0.01,
+    "choices": null,
+    "help": "Learning rate for Adam optimizer during training.",
+    "required": false
+  },
+  {
+    "name": "train_dt",
+    "default": 0.1,
+    "choices": null,
+    "help": "Timestep for simulations during training.",
+    "required": false
+  },
+  {
+    "name": "train_sd",
+    "default": 0.5,
+    "choices": null,
+    "help": "Standard deviation of Gaussian noise for simulation steps.",
+    "required": false
+  },
+  {
+    "name": "train_tau",
+    "default": 1e-6,
+    "choices": null,
+    "help": "Tau hyperparameter of PRESCIENT.",
+    "required": false
+  },
+  {
+    "name": "train_batch",
+    "default": 0.1,
+    "choices": null,
+    "help": "Batch size (fraction) for training.",
+    "required": false
+  },
+  {
+    "name": "train_clip",
+    "default": 0.25,
+    "choices": null,
+    "help": "Gradient clipping threshold for training.",
+    "required": false
+  },
+  {
+    "name": "save",
+    "default": 100,
+    "choices": null,
+    "help": "Save model every n epochs.",
+    "required": false
+  }
+
+
+    ]
+  },
+  {
+    "desc": "Simulate cellular trajectories using a trained PRESCIENT model and a PRESCIENT data object.",
+    "name": "simulate_trajectories",
     "epilog": null,
     "params": [
       {
@@ -34,5 +198,28 @@
     }
 
     ]
+  },
+  {
+    "desc": "Simulate unperturbed and perturbed simulations of cells using a trained PRESCIENT model and a PRESCIENT data object.",
+    "name": "perturbation_analysis",
+    "epilog": null,
+    "params": [
+      {
+        "name": "data_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to PRESCIENT data file stored as a torch pt.",
+        "required": true
+    },
+    {
+      "name": "model_path",
+      "default": null,
+      "choices": null,
+      "help": "Path to directory containing PRESCIENT model for simulation.",
+      "required": true
   }
+
+    ]
+  }
+
 ]
