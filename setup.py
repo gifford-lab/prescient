@@ -6,6 +6,8 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="prescient",
     version="0.0.1",
+
+
     author="Sachit Saksena; Grace Hui-Ting Yeo",
     author_email="sachit@mit.edu",
     license="MIT License",

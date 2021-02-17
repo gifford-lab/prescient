@@ -19,18 +19,18 @@ location: Quickstart
 <p class="list-group-item list-group-item-action home-list-item">
  Run the following to estimate growth rates and create a <a href="{{ site.baseurl }}/file_formats/">PRESCIENT training pyTorch object</a>:
 <br>
-    <code>prescient data -d your_data.csv -o /out/ --tp_col "tp" --celltype_col "annotation" --growth_annotation /prescient/data/gtf/ </code>
+    <code>prescient process_data -d /path/to/your_data.csv -o /path/for/output/ -m /path/to/metadata.csv --tp_col "timepoint colname" --celltype_col "annotation colname" --growth_path /path/to/growth_weights.pt </code>
 <br>
 </p>
 </div>
 <br>
 <h2>Train PRESCIENT model</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-<p>To train a PRESCIENT model, you need access to GPU resources. If you are using a GPU with CUDA support, default commands will work.
-If you need access to GPU resources, please refer to <a href="{{ site.baseurl }}/cloud">accessing cloud resources.</a>
+<p>To train a PRESCIENT model, you need access to GPU resources with CUDA support. If you need cloud access to GPU resources,
+  please refer to Google Cloud Services or AWS documentation for running command line tools on VMs with cloud GPUs.
 <br>
-<p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command:<br>
-  <code>prescient train -i data.pt -o ./out_dir/ --device 0</code>
+<p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command and the <code>data.pt</code> file from the <code>process_data</code> command:<br>
+  <code>prescient train_model -i /path/to/data.pt --out_dir ./experiments/</code>
 </p>
 <br>
 <p>
@@ -44,7 +44,7 @@ please refer to <a href="{{ site.baseurl }}/command-line interface">CLI document
 
 <h2>Simulate trajectories</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-<p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate and visualize trajectories of cells.
+<p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate trajectories of cells.
 To do so, run the <b>simulate</b> command line functions.</p>
 <p class="list-group-item list-group-item-action home-list-item">
 In the following example, the function will randomly sample 50 cells at
@@ -56,7 +56,10 @@ In the following example, the function will randomly sample 50 cells at
   <li>"simulation": generated cells of simulated trajectory</li>
   <li>"labels": cell type classification of each cell along simulated trajectory</li>
 </ul>
-<p>For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/command-line interface">CLI documentation.</a></p>
+<p>
+  For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/documentation">documentation.</a>
+  For a notebook tutorial on visualizing trajectories, please refer to the <a href="{{ site.baseurl }}/vignettes">vignettes<a/> tab.
+</p>
 </div>
 
 <br>

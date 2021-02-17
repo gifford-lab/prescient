@@ -1,0 +1,18 @@
+{
+  "process_data": {
+    "text": "This command converts my_matrix.h5ad to txt format.",
+    "code": ""
+  },
+  "train_model": {
+    "text": "This command computes gene set scores. See notebooks for an example of converting gene set scores to growth rates.",
+    "code": ""
+  },
+  "simulate_trajectories": {
+    "text": "This command generates simulated trajectories from randomly initialized cells.",
+    "code": ""
+  },
+  "perturbation_analysis": {
+    "text": "This command runs perturbations of selected genes and simulates forward.",
+    "code": "e"
+}
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "desc": "Process normalized expression dataframe into compatible PRESCIENT file format.",
+    "name": "process_data",
+    "epilog": null,
+    "params": [
+      {
+        "name": "data_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to normalized expression CSV.",
+        "required": true
+      },
+      {
+        "name": "out_dir",
+        "default": null,
+        "choices": null,
+        "help": "Directory to store outputs.",
+        "required": true
+      }
+    ]
+  },
+  {
+    "desc": "Train a PRESCIENT model using a PRESCIENT file format as input.",
+    "name": "train_model",
+    "epilog": null,
+    "params": [
+      {
+        "name": "data_path",
+        "default": null,
+        "choices": null,
+        "help": "Path to PRESCIENT training file (stored in out_dir of process_data command).",
+        "required": true
+    }
+
+    ]
+  }
+]
