@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="prescient",
-    version="0.0.1",
+    version="0.0.2",
 
 
     author="Sachit Saksena; Grace Hui-Ting Yeo",
@@ -26,7 +26,7 @@ setuptools.setup(
     install_requires=[
         "scanpy>=1.7",
         "pyreadr>=0.0",
-        "matplotlib>=3.1",
+        "matplotlib>=3.3",
         "annoy>=1.17.0",
         "numpy>=1.14",
         "pandas>=0.25",

@@ -1,11 +1,11 @@
 {
   "process_data": {
     "text": "This command converts my_matrix.h5ad to txt format.",
-    "code": ""
+    "code": "prescient process_data -d ./data/Veres2019/Stage_5.Seurat.csv -m data/Veres2019/GSE114412_Stage_5.all.cell_metadata.csv --growth_path data/Veres2019/Veres2019_growth-kegg.pt -o './' --tp_col 'CellWeek' --celltype_col 'Assigned_cluster'"
   },
   "train_model": {
     "text": "This command computes gene set scores. See notebooks for an example of converting gene set scores to growth rates.",
-    "code": ""
+     "code": "prescient train_model -i ./data.pt --out_dir ./ "
   },
   "simulate_trajectories": {
     "text": "This command generates simulated trajectories from randomly initialized cells.",
