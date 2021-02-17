@@ -11,53 +11,6 @@ import umap
 import annoy
 import torch
 
-def compute_growth(L0, L, k):
-    L = float(L)
-    L0 = float(L0)
-    k = float(k)
-
-    kb = np.log(k) / np.min(birth_score)
-    kd = np.log(k) / np.min(death_score)
-
-    b = birth_smoothed_score
-    d = death_smoothed_score
-
-    b = L0 + L / (1 + np.exp(-kb * b))
-    d = L0 + L / (1 + np.exp(-kd * d))
-    g = b - d
-    return g
-
-def get_growth_weights(x, xp, y, genes, gst, **kwargs):
-    """
-    Estimate growth using KEGG gene annotations. Implements smoothing procedure.
-
-    Inputs:
-    -------
-    x: numpy ndarray of gene expression.
-    genes: list or numpy array of highly variable gene symbols.
-    birth_gst: birth signature annotations.
-
-    Outputs:
-    --------
-    weights: growth rates vector.
-    """
-    birth_gst = [g for g in gst['gene_symbol'].unique() if g in genes]
-    gst = pd.read_csv(gst, index_col = 0)
-    death_gst = [g for g in gst['gene_symbol'].unique() if g in genes]
-
-    birth_gst = [g for g in birth_gst if g not in death_gst]
-    death_gst = [g for g in death_gst if g not in birth_gst]
-
-    # smoothing procedure for converting to pcs
-    ay = annoy.AnnoyIndex(xp_.shape[1], 'euclidean')
-    for i in range(xp_.shape[0]):
-        ay.add_item(i, xp_[i])
-    ay.build(10)
-
-    # compute growth
-    g = compute_growth(L0, L, k)
-
-    return weights
 
 def read_data(args):
     """
@@ -79,7 +32,7 @@ def read_data(args):
         meta = pd.read_csv(args.meta_path)
         genes = expr.columns
         expr = expr.to_numpy()
-        y = meta[args.tp_col].values.astype(int)
+        tps = meta[args.tp_col].values.astype(int)
         celltype = meta[args.celltype_col].values
 
     # todo: implement Scanpy anndata functionality
@@ -99,7 +52,13 @@ def read_data(args):
     xp = pca.fit_transform(x)
     xu = um.fit_transform(xp)
 
-    return x, xp, xu, y, pca, um, celltype, genes
+    y = list(np.sort(np.unique(tps)))
+
+    x_ = [torch.from_numpy(x[(meta[args.tp_col] == d),:]).float() for d in y]
+    xp_ = [torch.from_numpy(xp[(meta[args.tp_col] == d),:]).float() for d in y]
+    xu_ = [torch.from_numpy(xu[(meta[args.tp_col] == d),:]).float() for d in y]
+
+    return expr, x_, xp_, xu_, y, pca, um, tps, celltype, genes
 
 def create_parser():
     parser = argparse.ArgumentParser()
@@ -120,19 +79,13 @@ def create_parser():
 
     # dimensionality reduction growth_parameters
     parser.add_argument('--num_pcs', type=int, default=50, required=False,
-    help="Define number of PCs for training.")
+    help="Define number of PCs to compute for input to training.")
     parser.add_argument('--num_neighbors_umap', type=int, default=10, required=False,
     help="Define number of neighbors for UMAP trasformation (UMAP used only for visualization.)")
 
     # proliferation scores
     parser.add_argument('--growth_path', type=str,
-    help="Path to torch pt file containg pre-computed growth weights.")
-
-    # if no growth scores available
-    parser.add_argument('--estimate_growth', type=bool, default=False,
-    help="Set estimate_growth to True if no growth_path provided.")
-    parser.add_argument('--growth_annotation', type=str)
-    parser.add_argument('--growth_parameters', type=str, required=False)
+    help="Path to torch pt file containg pre-computed growth weights. See vignette notebooks for generating growth rate vector.")
     return parser
 
 def main(args):
@@ -155,29 +108,25 @@ def main(args):
     if "csv" in str(args.data_path).split('/')[-1] and (args.meta_path == None or args.tp_col == None or args.celltype_col == None):
         raise ValueError("If csv/tsv/txt provided, you must provide a path to metadata along with column name designations.")
 
-    x, xp, xu, y, pca, um, celltype, genes = read_data(args)
+    expr, x, xp, xu, y, pca, um, tps, celltype, genes = read_data(args)
 
-    if not args.estimate_growth:
-        w_pt = torch.load(args.growth_path)
-        w = w_pt["w"]
-    else:
-        if args.growth_parameters != None:
-            growth_args = str(args.growth_parameters).split(',')
-            w = estimate_growth(x, xp, genes, args.growth_annotation, L0=growth_args[0], L=growth_args[1], k=growth_args[2])
-        else:
-            w = estimate_growth(x, xp, genes, y, args.growth_annotation)
+    w_pt = torch.load(args.growth_path)
+    w = w_pt["w"]
+
 
     # write as a torch object
     torch.save({
+     "data": expr,
+     "genes": genes,
+     "celltype": celltype,
+     "tps": tps,
      "x":x,
      "xp":xp,
      "xu": xu,
      "y": y,
-     "genes": genes,
      "pca": pca,
      "um":um,
-     "w":w,
-     "celltype": celltype
+     "w":w
      }, args.out_dir+"data.pt")
 
 if __name__ == '__main__':

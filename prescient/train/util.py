@@ -22,10 +22,8 @@ import sklearn.decomposition
 # ---- convenience functions
 
 def p_samp(p, num_samp, w = None):
-
     repflag = p.shape[0] < num_samp
     p_sub = np.random.choice(p.shape[0], size = num_samp, replace = repflag)
-
     if w is None:
         w_ = torch.ones(len(p_sub))
     else:

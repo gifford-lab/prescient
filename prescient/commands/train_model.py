@@ -116,8 +116,8 @@ def train_init(args):
 
     # data
     data_pt = load_data(args)
-    x = torch.tensor(data_pt["xp"])
-    tps = data_pt["y"]
+    x = data_pt["xp"]
+    y = data_pt["y"]
     weight = data_pt["w"]
     if args.weight_name != None:
         a.weight = args.weight_name
@@ -136,8 +136,6 @@ def train_init(args):
     config = init_config(a)
 
     config.x_dim = x[0].shape[-1]
-    y = list(np.sort(np.unique(tps)))
-    print(y)
     config.t = y[-1] - y[0]
 
     config.start_t = y[0]

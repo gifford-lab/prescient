@@ -46,3 +46,56 @@ def classify_cells(args, data_pt, all_sims_timepoints, ann_dir):
             yp.append(yt)
         yp_all.append(yp)
     return yp_all
+
+def compute_growth(L0, L, k):
+    L = float(L)
+    L0 = float(L0)
+    k = float(k)
+
+    kb = np.log(k) / np.min(birth_score)
+    kd = np.log(k) / np.min(death_score)
+
+    b = birth_smoothed_score
+    d = death_smoothed_score
+
+    b = L0 + L / (1 + np.exp(-kb * b))
+    d = L0 + L / (1 + np.exp(-kd * d))
+    g = b - d
+    return g
+
+def get_growth_weights(x, xp, y, genes, gst, **kwargs):
+    """
+    Estimate growth using KEGG gene annotations. Implements smoothing procedure.
+
+    Inputs:
+    -------
+    x: numpy ndarray of gene expression.
+    genes: list or numpy array of highly variable gene symbols.
+    birth_gst: birth signature annotations.
+
+    Outputs:
+    --------
+    weights: growth rates vector.
+    """
+    birth_gst = [g for g in gst['gene_symbol'].unique() if g in genes]
+    gst = pd.read_csv(gst, index_col = 0)
+    death_gst = [g for g in gst['gene_symbol'].unique() if g in genes]
+
+    birth_gst = [g for g in birth_gst if g not in death_gst]
+    death_gst = [g for g in death_gst if g not in birth_gst]
+
+    # smoothing procedure for converting to pcs
+    ay = annoy.AnnoyIndex(xp_.shape[1], 'euclidean')
+    for i in range(xp_.shape[0]):
+        ay.add_item(i, xp_[i])
+    ay.build(10)
+
+    # compute growth
+    g = compute_growth(L0, L, k)
+    if args.growth_parameters != None:
+        growth_args = str(args.growth_parameters).split(',')
+        w = estimate_growth(x, xp, genes, args.growth_annotation, L0=growth_args[0], L=growth_args[1], k=growth_args[2])
+    else:
+        w = estimate_growth(x, xp, genes, y, args.growth_annotation)
+
+    return weights

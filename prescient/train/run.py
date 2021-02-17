@@ -49,7 +49,6 @@ def run(args, init_task):
 
             model.to(device)
             x_last = x[config.train_t[-1]].to(device) # use the last available training point
-
             optimizer = optim.SGD(list(model.parameters()), lr = config.pretrain_lr)
 
             pbar = tqdm.tqdm(range(config.pretrain_epochs))
@@ -92,7 +91,6 @@ def run(args, init_task):
 
             pbar = tqdm.tqdm(range(config.train_epochs))
             x_last = x[config.train_t[-1]].to(device) # use the last available training point
-
             # fit on time points
 
             best_train_loss_xy = np.inf
