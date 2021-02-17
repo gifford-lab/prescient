@@ -1,18 +1,18 @@
 {
   "process_data": {
     "text": "This command takes a normalized expression CSV, metadata CSV, and pre-computed weight torch file as input and produces a PRESCIENT training torch object.",
-    "code": "prescient process_data -d data/Veres2019/Stage_5.Seurat.csv -m data/Veres2019/GSE114412_Stage_5.all.cell_metadata.csv --growth_path data/Veres2019/Veres2019_growth-kegg.pt -o './' --tp_col 'CellWeek' --celltype_col 'Assigned_cluster'"
+    "code": "-d data/Veres2019/Stage_5.Seurat.csv -m data/Veres2019/GSE114412_Stage_5.all.cell_metadata.csv --growth_path data/Veres2019/Veres2019_growth-kegg.pt -o './' --tp_col 'CellWeek' --celltype_col 'Assigned_cluster'"
   },
   "train_model": {
     "text": "This command trains a PRESCIENT model using a PRESCIENT training torch object.",
-     "code": "prescient train_model -i data.pt --out_dir /experiments/ --weight_name 'kegg-growth --seed 3 --layers 2 --k_dim 200 --train_tau 1e-06"
+     "code": "-i data.pt --out_dir /experiments/ --weight_name 'kegg-growth --seed 3 --layers 2 --k_dim 200 --train_tau 1e-06"
   },
   "simulate_trajectories": {
     "text": "This command generates simulated trajectories from randomly initialized cells using a PRESCIENT model and training torch object.",
-    "code": "prescient simulate_trajectories -i data.pt --model_path /experiments/kegg-growth-softplus_2_200-1e-06/ --num_steps 10 -o experiments/ --seed 2"
+    "code": "-i data.pt --model_path /experiments/kegg-growth-softplus_2_200-1e-06/ --num_steps 10 -o experiments/ --seed 2"
   },
   "perturbation_analysis": {
     "text": "This command runs forward simulations of unperturbed cells and cells with perturbations of selected genes.",
-    "code": "prescient perturbation_analysis -i ../Downloads/data.pt -p 'GENE1,GENE2,GENE3' -z 5 --model_path /experiments/kegg-softplus_2_200-1e-06/ --num_steps 10 --seed 2 -o experiments/"
+    "code": "-i ../Downloads/data.pt -p 'GENE1,GENE2,GENE3' -z 5 --model_path /experiments/kegg-softplus_2_200-1e-06/ --num_steps 10 --seed 2 -o experiments/"
 }
 }
