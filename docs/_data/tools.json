@@ -41,14 +41,14 @@
       },
       {
         "name": "num_pcs",
-        "default": null,
+        "default": 50,
         "choices": null,
         "help": "Define number of PCs to compute for input to training.",
         "required": false
       },
       {
         "name": "num_neighbors_umap",
-        "default": null,
+        "default": 10,
         "choices": null,
         "help": "Define number of neighbors for UMAP trasformation (UMAP used only for visualization.)",
         "required": false
@@ -177,11 +177,9 @@
     "name": "save",
     "default": 100,
     "choices": null,
-    "help": "Save model every n epochs.",
+    "help": "Save model every n epochs as torch dict.",
     "required": false
   }
-
-
     ]
   },
   {
@@ -190,13 +188,96 @@
     "epilog": null,
     "params": [
       {
+        "name": "perturb_genes",
+        "default": null,
+        "choices": null,
+        "help": "Provide a gene or list of genes to be perturbed as a string (commas, no spaces). Must be in the feature set used to train models.",
+        "required": true
+    },
+    {
+      "name": "z_score",
+      "default": 5.0,
+      "choices": null,
+      "help": "Set magnitude of z_score perturbation.",
+      "required": true
+  },
+      {
         "name": "data_path",
         "default": null,
         "choices": null,
         "help": "Path to PRESCIENT training file (stored in out_dir of process_data command).",
         "required": true
-    }
-
+    },
+    {
+      "name": "model_path",
+      "default": null,
+      "choices": null,
+      "help": "Path to directory containing PRESCIENT model for simulation.",
+      "required": true
+  },
+  {
+    "name": "out_path",
+    "default": null,
+    "choices": null,
+    "help": "Path to directory for storing output.",
+    "required": true
+  },
+  {
+    "name": "num_sims",
+    "default": 10,
+    "choices": null,
+    "help": "Number of simulations (random initializations of n cells) to run.",
+    "required": false
+  },
+  {
+    "name": "num_cells",
+    "default": 200,
+    "choices": null,
+    "help": "Number of cells per simulation.",
+    "required": false
+  },
+  {
+    "name": "num_steps",
+    "default": nulls,
+    "choices": null,
+    "help": "Number of steps forward in time. If not provided, steps will be calculated based on start and end point + train dt.",
+    "required": false
+  },
+  {
+    "name": "seed",
+    "default": 1,
+    "choices": null,
+    "help": "Choose the seed of the trained model to use for simulations.",
+    "required": false
+  },
+  {
+    "name": "epoch",
+    "default": 002500,
+    "choices": null,
+    "help": "Choose which epoch of the chosen model to use for simulations.",
+    "required": false
+  },
+  {
+    "name": "gpu",
+    "default": null,
+    "choices": null,
+    "help": "If available, assign GPU device number (requires CUDA). Provide as int.",
+    "required": false
+  },
+  {
+    "name": "celltype_subset",
+    "default": null,
+    "choices": null,
+    "help": "Randomly sample initial cells from a particular celltype defined in metadata. Provide celltype as str as appears in metadata.",
+    "required": false
+  },
+  {
+    "name": "tp_subset",
+    "default": null,
+    "choices": null,
+    "help": "Randomly sample initial cells from a particular timepoint. Provide timepoint as int or as appears in metadata.",
+    "required": false
+  }
     ]
   },
   {
@@ -208,7 +289,7 @@
         "name": "data_path",
         "default": null,
         "choices": null,
-        "help": "Path to PRESCIENT data file stored as a torch pt.",
+        "help": "Path to PRESCIENT training file (stored in out_dir of process_data command).",
         "required": true
     },
     {
@@ -217,8 +298,70 @@
       "choices": null,
       "help": "Path to directory containing PRESCIENT model for simulation.",
       "required": true
+  },
+  {
+    "name": "out_path",
+    "default": null,
+    "choices": null,
+    "help": "Path to directory for storing output.",
+    "required": true
+  },
+  {
+    "name": "num_sims",
+    "default": 10,
+    "choices": null,
+    "help": "Number of simulations (random initializations of n cells) to run.",
+    "required": false
+  },
+  {
+    "name": "num_cells",
+    "default": 200,
+    "choices": null,
+    "help": "Number of cells per simulation.",
+    "required": false
+  },
+  {
+    "name": "num_steps",
+    "default": nulls,
+    "choices": null,
+    "help": "Number of steps forward in time. If not provided, steps will be calculated based on start and end point + train dt.",
+    "required": false
+  },
+  {
+    "name": "seed",
+    "default": 1,
+    "choices": null,
+    "help": "Choose the seed of the trained model to use for simulations.",
+    "required": false
+  },
+  {
+    "name": "epoch",
+    "default": 002500,
+    "choices": null,
+    "help": "Choose which epoch of the chosen model to use for simulations.",
+    "required": false
+  },
+  {
+    "name": "gpu",
+    "default": null,
+    "choices": null,
+    "help": "If available, assign GPU device number (requires CUDA). Provide as int.",
+    "required": false
+  },
+  {
+    "name": "celltype_subset",
+    "default": null,
+    "choices": null,
+    "help": "Randomly sample initial cells from a particular celltype defined in metadata. Provide celltype as str as appears in metadata.",
+    "required": false
+  },
+  {
+    "name": "tp_subset",
+    "default": null,
+    "choices": null,
+    "help": "Randomly sample initial cells from a particular timepoint. Provide timepoint as int or as appears in metadata.",
+    "required": false
   }
-
     ]
   }
 
