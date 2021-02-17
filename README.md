@@ -1,3 +1,6 @@
+[![PyPI version](https://badge.fury.io/py/prescient.svg)](https://badge.fury.io/py/prescient)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # prescient
 Software for PRESCIENT (Potential eneRgy undErlying Single Cell gradIENTs), a generative model for modeling single-cell time-series.
 + Documentation available at prescient.github.io.
