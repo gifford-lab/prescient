@@ -1,3 +1,3 @@
 from .model import *
-from .train import *
+from .run import *
 from .util import *

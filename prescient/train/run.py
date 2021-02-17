@@ -1,5 +1,6 @@
 # shared functions and classes, including the model and `run`
 # which implements the main pre-training and training loop
+import os
 
 import torch
 import torch.nn.functional as F
@@ -7,24 +8,11 @@ from torch import nn, optim
 
 import numpy as np
 
-from geomloss import SamplesLoss
-
 import tqdm
-
-from collections import OrderedDict
-from types import SimpleNamespace
 from time import strftime, localtime
 
-import argparse
-import itertools
-import json
-import os
-import sys
-
-import sklearn.decomposition
-
-from model import *
-from util import *
+from .model import *
+from .util import *
 
 def run(args, init_task):
 
@@ -60,9 +48,7 @@ def run(args, init_task):
         else:
 
             model.to(device)
-
             x_last = x[config.train_t[-1]].to(device) # use the last available training point
-
             optimizer = optim.SGD(list(model.parameters()), lr = config.pretrain_lr)
 
             pbar = tqdm.tqdm(range(config.pretrain_epochs))
@@ -105,7 +91,6 @@ def run(args, init_task):
 
             pbar = tqdm.tqdm(range(config.train_epochs))
             x_last = x[config.train_t[-1]].to(device) # use the last available training point
-
             # fit on time points
 
             best_train_loss_xy = np.inf

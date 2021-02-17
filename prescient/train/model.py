@@ -20,7 +20,7 @@ import sys
 
 import sklearn.decomposition
 
-from util import *
+from .util import *
 
 # ---- PRESCIENT
 

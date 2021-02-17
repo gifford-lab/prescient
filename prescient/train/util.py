@@ -22,10 +22,8 @@ import sklearn.decomposition
 # ---- convenience functions
 
 def p_samp(p, num_samp, w = None):
-
     repflag = p.shape[0] < num_samp
     p_sub = np.random.choice(p.shape[0], size = num_samp, replace = repflag)
-
     if w is None:
         w_ = torch.ones(len(p_sub))
     else:
@@ -70,8 +68,8 @@ def get_weight(w, time_elapsed):
 
 def init(args):
 
-    args.cuda = not args.no_cuda and torch.cuda.is_available()
-    device = torch.device('cuda:{}'.format(args.device) if args.cuda else 'cpu')
+    args.cuda = torch.cuda.is_available()
+    device = torch.device('cuda:{}'.format(args.gpu) if args.cuda else 'cpu')
     kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 
     return device, kwargs
