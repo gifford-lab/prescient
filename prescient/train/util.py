@@ -68,8 +68,8 @@ def get_weight(w, time_elapsed):
 
 def init(args):
 
-    args.cuda = not args.no_cuda and torch.cuda.is_available()
-    device = torch.device('cuda:{}'.format(args.device) if args.cuda else 'cpu')
+    args.cuda = torch.cuda.is_available()
+    device = torch.device('cuda:{}'.format(args.gpu) if args.cuda else 'cpu')
     kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 
     return device, kwargs

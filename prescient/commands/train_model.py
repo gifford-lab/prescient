@@ -19,7 +19,7 @@ import prescient.train as train
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--no-cuda', action = 'store_true')
-    parser.add_argument('--device', default = 7, type = int)
+    parser.add_argument('--gpu', default = 7, type = int)
     parser.add_argument('--out_dir', default = './experiments')
     parser.add_argument('--seed', type = int, default = 2)
     # -- data options
