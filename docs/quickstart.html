@@ -15,7 +15,7 @@ location: Quickstart
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>
   First, we recommend looking at <a href="{{ site.baseurl }}/file_formats">how to prepare inputs for PRESCIENT</a>
-  and bring your scRNA-seq to an acceptable format for PRESCIENT. For estimating growth, please refer to the <a href="{{ site.baseurl }}/notebooks">notebooks<a/> tab.
+  and bring your scRNA-seq to an acceptable format for PRESCIENT. For estimating growth weights, please refer to the <a href="{{ site.baseurl }}/notebooks">Usage notebooks<a/> tab.
 <p class="list-group-item list-group-item-action home-list-item">
  Run the following to estimate growth rates and create a <a href="{{ site.baseurl }}/file_formats/">PRESCIENT training pyTorch object</a>:
 <br>
@@ -30,7 +30,7 @@ location: Quickstart
   please refer to Google Cloud Services or AWS documentation for running command line tools on VMs with cloud GPUs.
 <br>
 <p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command and the <code>data.pt</code> file from the <code>process_data</code> command:<br>
-  <code>prescient train_model prescient train_model -i /path/to/data.pt --out_dir /experiments/ --weight_name 'kegg-growth'</code>
+  <code>prescient train_model -i /path/to/data.pt --out_dir /experiments/ --weight_name 'kegg-growth'</code>
 </p>
 <br>
 <p>
@@ -44,20 +44,19 @@ please refer to <a href="{{ site.baseurl }}/documentation">CLI documentation.</a
 
 <h2>Simulate trajectories</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-<p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate trajectories of cells.
+<p>Now, with a trained PRESCIENT model and the original PRESCIENT data object, you can simulate trajectories of cells with arbitrary intializations.
 To do so, run the <b>simulate</b> command line functions.</p>
 <p class="list-group-item list-group-item-action home-list-item">
 In the following example, the function will randomly sample 50 cells at
  the first provided timepoint and simulate forward to the final timepoint:
- <code>prescient simulate_trajectories -i /path/to/data.pt --model_path /path/to/trained/model_directory --num_steps 10 -o /path/to/output_dir --seed 2</code>
+ <code>prescient simulate_trajectories -i /path/to/data.pt --model_path /path/to/trained/model_directory -o /path/to/output_dir --seed 2</code>
 </p>
 <p>This will produce a PRESCIENT simulation object containing the following:</p>
 <ul>
   <li>"sims": generated cells of simulated trajectory</li>
 </ul>
 <p>
-  For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/documentation">documentation.</a>
-  For a notebook tutorial on visualizing trajectories, please refer to the <a href="{{ site.baseurl }}/notebooks">Usage notebooks<a/> tab.
+  For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/documentation">CLI documentation.</a>
 </p>
 </div>
 
@@ -67,12 +66,14 @@ In the following example, the function will randomly sample 50 cells at
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>
   One of the advantages of training a PRESCIENT model is the ability to simulate the trajectory of out-of-sample
-  or <b>perturbed</b> initial cells.
+  or <b>perturbed</b> initial cells. To do this, individual or sets of genes are perturbed by setting the value(s) to a z-score in scaled
+  expression space. The following function induces perturbations and generates simulated trajectories of both unperturbed and perturbed cells
+  for comparison.
 </p>
 <p class="list-group-item list-group-item-action home-list-item">
-  <code>prescient perturbation_analysis -i /path/to/data.pt -p 'GENE1,GENE2,GENE3' -z 5 --model_path /path/to/trained/model_directory --num_steps 10 --seed 2 -o /path/to/output_dir</code>
+  In the following example GENE1, GENE2, and GENE3 are perturbed in 10 random samples of 200 cells with a z-score of 5 and simulated forward to the final timepoint with a trained PRESCIENT model:
+  <code>prescient perturbation_analysis -i /path/to/data.pt -p 'GENE1,GENE2,GENE3' -z 5 --model_path /path/to/trained/model_directory --seed 2 -o /path/to/output_dir</code>
 </p>
-
 
 <p>This will produce a PRESCIENT simulation object containing the following:</p>
 <ul>
@@ -80,4 +81,7 @@ In the following example, the function will randomly sample 50 cells at
   <li>"unperturbed_sim": PC coordinates of unperturbed simulated trajectory</li>
   <li>"perturbed_sim": PC coordinates of perturbed simulated trajectory</li>
 </ul>
+<p>
+  For more control over choosing cells, number of steps, etc. please refer to <a href="{{ site.baseurl }}/documentation">CLI documentation.</a>
+</p>
 </div>
