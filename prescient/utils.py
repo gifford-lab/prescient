@@ -1,7 +1,9 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 from annoy import AnnoyIndex
+import torch
 
 def plot_interpolation(): # TO-DO
     pass
@@ -20,7 +22,7 @@ def train_ann(data_pt):
     xtr = data_pt["xp"]
     n_trees = 10
     n_neighbors = 20
-    t = annoy.AnnoyIndex(xtr.shape[1], 'euclidean')
+    t = AnnoyIndex(xtr.shape[1], 'euclidean')
     for i in range(xtr.shape[0]):
         t.add_item(i, xtr[i])
     t.build(n_trees)
@@ -90,7 +92,7 @@ def get_growth_weights(x, xp, metadata, tp_col, genes, birth_gst, death_gst, out
     death_gst = [g for g in death_gst if g not in birth_gst]
 
     # smoothing procedure for growth
-    ay = annoy.AnnoyIndex(xp.shape[1], 'euclidean')
+    ay = AnnoyIndex(xp.shape[1], 'euclidean')
     for i in range(xp.shape[0]):
         ay.add_item(i, xp[i])
     ay.build(10)
@@ -134,4 +136,3 @@ def get_growth_weights(x, xp, metadata, tp_col, genes, birth_gst, death_gst, out
     }, outfile)
 
     return g, g_l
-    
