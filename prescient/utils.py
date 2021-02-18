@@ -77,6 +77,11 @@ def get_growth_weights(x, xp, y, genes, gst, **kwargs):
     --------
     weights: growth rates vector.
     """
+    ay = AnnoyIndex(xp.shape[1], 'euclidean') 
+    for i in range(xp.shape[0]):
+        ay.add_item(i, xp[i])
+    ay.build(10)
+
     birth_gst = [g for g in gst['gene_symbol'].unique() if g in genes]
     gst = pd.read_csv(gst, index_col = 0)
     death_gst = [g for g in gst['gene_symbol'].unique() if g in genes]

@@ -6,7 +6,7 @@ from prescient.train.model import *
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--data_path", required=True, help="Path to PRESCIENT data file stored as a torch pt.")
-    parser.add_argument("--model_path", required=True, help="Path to model directory.")
+    parser.add_argument("--model_path", required=True, help="Path to directory containing PRESCIENT model for simulation.")
     parser.add_argument("--seed", default=1, required=True, help="Choose the seed of the trained model to use for simulations.")
     parser.add_argument("--epoch", default="002500", type=str, required=False, help="Choose which epoch of the model to use for simulations.")
     parser.add_argument("--num_sims", default=10, help="Number of simulations to run.")

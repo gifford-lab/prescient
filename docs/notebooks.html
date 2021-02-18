@@ -1,0 +1,54 @@
+---
+title: Usage notebooks
+noheader: false
+permalink: notebooks/
+layout: document
+location: Usage notebooks
+---
+
+<h2>Usage notebooks</h2>
+<p>
+  Here, we present different examples of processing and analyses using PRESCIENT
+  using longitudinal scRNA-seq data from <a href="https://www.nature.com/articles/s41586-019-1168-5">Veres et al. 2019</a>
+  as an example dataset. This will be a growing list of notebooks as we add functionality and update PRESCIENT.
+</p>
+<br>
+<p>
+  To run the following notebooks with the example data, download the following directories containing raw data and trained PRESCIENT models:
+  <ul>
+    <li><a href="https://www.dropbox.com/sh/mz94yu0yjgvcp0i/AACAlnUQcr5BQBntJtHQSrkda?dl=1">Download training data</a></li>
+    <li><a href="https://www.dropbox.com/sh/o4897lyxh4189v3/AAB2Ek2ahtGkdDkHiByGBtaya?dl=1">Download trained PRESCIENT models</a></li>
+  </ul>
+
+</p>
+
+<h3>Estimating growth rates.</h3>
+<p>
+PRESCIENT models can incorporate proliferation during training by [INSERT DESCRIPTION].
+This was shown to greatly improve model performance, and we anticipate that this is
+</p>
+<ul>
+  <li><a href="">View notebook for estimating growth rates.</a></li>
+</ul>
+<p>This functionality will soon be available via the command line interface.</p>
+
+
+<h3>Visualizing potential landscape from trained models</h3>
+<p>
+Once the PRESCIENT model has been trained with the above command, you can visualize the vector field and
+  potential function of the learned differentiation landscape. The following notebook shows how to do that
+  using built in PRESCIENT commands.
+</p>
+<ul>
+  <li><a href="">View notebook for visualizing the potential landscape.</a></li>
+</ul>
+
+<h3>Simulating cells and visualizing animated trajectories</h3>
+<p>
+  With a trained PRESCIENT model it is possible to simulate single-cells forward in time with arbitrary initializations.
+  The following notebook shows how to simulate single cells and visualize trajectories as an animation.
+</p>
+<ul>
+  <li><a href="">View notebook for simulating cells forward in time and visualizing trajectories.</a></li>
+</ul>
+<p>You can simulate cells via the command line interface.</p>

@@ -59,4 +59,5 @@ The `prescient process_data` command will generate a torch pt file `data_pt` (se
 - data_pt["xu"]: Torch tensors of cell UMAPs split by timepoint.
 - data_pt["pca"]: sklearn.decomposition.PCA object fit to normalized expression and used to produce PCs.
 - data_pt["um"]: umap.UMAP object fit to PCs used to produce UMAP dims.
+- data_pt["y"]: List of timepoints.
 - data_pt["w"]: Torch tensors of pre-computed growth weights split by timepoint.

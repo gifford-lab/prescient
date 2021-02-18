@@ -31,11 +31,10 @@ def create_parser():
     parser.add_argument('--activation', default = 'softplus', help="Designate activation function for layers of NN.")
     parser.add_argument('--layers', default = 1, type = int, help="Choose number of layers for neural network parameterizing the potential function.")
     # -- pretrain options
-    parser.add_argument('--pretrain_lr', default = 1e-9, type = float)
     parser.add_argument('--pretrain_epochs', default = 500, type = int, help="Number of epochs for pretraining with contrastive divergence.")
     # -- train options
     parser.add_argument('--train_epochs', default = 2500, type = int, help="Number of epochs for training.")
-    parser.add_argument('--train_lr', default = 0.01, type = float, help="Learning rate for Adam optimizer.")
+    parser.add_argument('--train_lr', default = 0.01, type = float, help="Learning rate for Adam optimizer during training.")
     parser.add_argument('--train_dt', default = 0.1, type = float, help="Timestep for simulations during training.")
     parser.add_argument('--train_sd', default = 0.5, type = float, help="Standard deviation of Gaussian noise for simulation steps.")
     parser.add_argument('--train_tau', default = 1e-6, type = float, help="Tau hyperparameter of PRESCIENT.")

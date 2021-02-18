@@ -238,9 +238,9 @@
   },
   {
     "name": "epoch",
-    "default": 002500,
+    "default": "002500",
     "choices": null,
-    "help": "Choose which epoch of the chosen model to use for simulations.",
+    "help": "Choose which epoch of the chosen model to use for simulations. Provide this value as str.",
     "required": false
   },
   {
