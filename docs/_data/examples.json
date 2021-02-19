@@ -5,7 +5,7 @@
   },
   "train_model": {
     "text": "This command trains a PRESCIENT model using a PRESCIENT training torch object.",
-     "code": "-i data.pt --out_dir /experiments/ --weight_name 'kegg-growth --seed 3 --layers 2 --k_dim 200 --train_tau 1e-06"
+     "code": "-i data.pt --out_dir /experiments/ --weight_name 'kegg-growth' --seed 3 --layers 2 --k_dim 200 --train_tau 1e-06"
   },
   "simulate_trajectories": {
     "text": "This command generates simulated trajectories from randomly initialized cells using a PRESCIENT model and training torch object.",

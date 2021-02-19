@@ -11,7 +11,8 @@ location: Notebooks
   Here, we present different examples of various individual pre-processing and analyses steps using PRESCIENT. This will be a growing list of notebooks as we add functionality and update PRESCIENT.
   <br>
   To demonstrate, we use longitudinal scRNA-seq data from <a href="https://www.nature.com/articles/s41586-019-1168-5">Veres et al. 2019</a> Stage 5 pancreatic
-  beta-cell differentiation as an example dataset.
+  beta-cell differentiation as an example dataset. We present only a demo version of this analysis here for simplicity, please refer to the <a href="https://github.com/prescient-analysis">paper reproducibility github repo</a>,
+  for in-depth analyses used in the paper.
   To run the following notebooks with the example data, download the following directories containing raw data and trained PRESCIENT models:
   <ul>
     <li><a href="https://www.dropbox.com/sh/mz94yu0yjgvcp0i/AACAlnUQcr5BQBntJtHQSrkda?dl=1">Download training data</a></li>
@@ -20,7 +21,7 @@ location: Notebooks
 
 </p>
 
-<h3>Estimating growth rates.</h3>
+<h3>Estimating growth rates</h3>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
   <p>
     PRESCIENT models can incorporate proliferation during training via computing a "growth weight" per cell in a scRNA-seq dataset.
@@ -34,6 +35,30 @@ location: Notebooks
   </ul>
 </div>
 
+<h3>Running PRESCIENT using cloud resources</h3>
+<p>
+  Training PRESCIENT models using CPU can, in some cases, be time intensive.
+  For this reason, here we provide the path of least resistance to running the
+  whole training pipeline using cloud computing services.This Google Colab notebook provides a free demo of
+  how PRESCIENT can be run with GPU acceleration. PRESCIENT is also available via PyPI for installation
+  and usage on a local workstation, on a compute server, or on other cloud services such as Google Cloud or AWS.
+  Our example uses Google Colab which offers free access to public
+  GPUs hosted by Google. You can also use other cloud notebook servers such as
+  <a href="https://cloud.google.com/ai-platform/notebooks/docs/create-new">Gcloud AI platform</a> and
+  <a href="https://docs.aws.amazon.com/dlami/latest/devguide/setup-jupyter.html"></a>
+
+</p>
+<ul class="list-group-item list-group-item-action home-list-item">
+  <li><a href="https://colab.research.google.com/drive/1KSDiBH8-QLaHvnbSzHS_CIU3_8fuDT54?usp=sharing">View Google Colab notebook for using cloud GPUs.</a></li>
+</ul>
+
+<p>
+  If you are interested in running PRESCIENT using
+  Gcloud SDK command line instead of in a notebook, it is a more intensive process, so we provide links
+  to relevant publicly available Google documentation to explore this option in
+  <a href="{{ site.baseurl }}/documentation">CLI documentation</a>.
+</p>
+</div>
 
 <!-- <h3>Visualizing potential landscape from trained models</h3>
 <p>
