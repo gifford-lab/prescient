@@ -5,37 +5,8 @@ permalink: notebooks/
 layout: document
 location: Notebooks
 ---
-
-<h2>Usage notebooks</h2>
-<p>
-  Here, we present different examples of various individual pre-processing and analyses steps using PRESCIENT. This will be a growing list of notebooks as we add functionality and update PRESCIENT.
-  <br>
-  To demonstrate, we use longitudinal scRNA-seq data from <a href="https://www.nature.com/articles/s41586-019-1168-5">Veres et al. 2019</a> Stage 5 pancreatic
-  beta-cell differentiation as an example dataset. We present only a demo version of this analysis here for simplicity, please refer to the <a href="https://github.com/prescient-analysis">paper reproducibility github repo</a>,
-  for in-depth analyses used in the paper.
-  To run the following notebooks with the example data, download the following directories containing raw data and trained PRESCIENT models:
-  <ul>
-    <li><a href="https://www.dropbox.com/sh/mz94yu0yjgvcp0i/AACAlnUQcr5BQBntJtHQSrkda?dl=1">Download training data</a></li>
-    <li><a href="https://www.dropbox.com/sh/o4897lyxh4189v3/AAB2Ek2ahtGkdDkHiByGBtaya?dl=1">Download trained PRESCIENT models</a></li>
-  </ul>
-
-</p>
-
-<h3>Estimating growth rates</h3>
-<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-  <p>
-    PRESCIENT models can incorporate proliferation during training via computing a "growth weight" per cell in a scRNA-seq dataset.
-    This was shown to greatly improve model performance, and we conclude that growth is important for model performance. When lineage tracing is available, empirical growth rates can be computed, however since the primary
-    use case for PRESCIENT is in the absence of lineage tracing, we provide a function for estimating growth from proliferative/death gene signatures.
-    Here, these gene sets are provided in the downloaded data folder and used in the notebook, but you
-    can use any gene set (gst) from common sources like <a href="http://www.gsea-msigdb.org/gsea/msigdb/index.jsp">MSigDB</a>.
-  </p>
-  <ul class="list-group-item list-group-item-action home-list-item">
-    <li><a href="https://nbviewer.jupyter.org/github/gifford-lab/prescient/blob/master/notebooks/estimate-growth-rates.ipynb">View notebook for estimating growth rates.</a></li>
-  </ul>
-</div>
-
 <h3>Running PRESCIENT using cloud resources</h3>
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
 <p>
   Training PRESCIENT models using CPU can, in some cases, be time intensive.
   For this reason, here we provide the path of least resistance to running the
@@ -58,6 +29,35 @@ location: Notebooks
   to relevant publicly available Google documentation to explore this option in
   <a href="{{ site.baseurl }}/documentation">CLI documentation</a>.
 </p>
+</div>
+
+<h2>Usage and analysis notebooks</h2>
+<p>
+  Here, we present different examples of various individual pre-processing and analyses steps using PRESCIENT. This will be a growing list of notebooks as we add functionality and update PRESCIENT.
+  <br>
+  To demonstrate, we use longitudinal scRNA-seq data from <a href="https://www.nature.com/articles/s41586-019-1168-5">Veres et al. 2019</a> Stage 5 pancreatic
+  beta-cell differentiation as an example dataset. We present only a demo version of this analysis here for simplicity, please refer to the <a href="https://github.com/gifford-lab/prescient-analysis">paper reproducibility github repo</a>,
+  for in-depth analyses used in the paper.
+  To run the following notebooks with the example data, download the following directories containing raw data and trained PRESCIENT models:
+  <ul>
+    <li><a href="https://www.dropbox.com/sh/mz94yu0yjgvcp0i/AACAlnUQcr5BQBntJtHQSrkda?dl=1">Download training data</a></li>
+    <li><a href="https://www.dropbox.com/sh/o4897lyxh4189v3/AAB2Ek2ahtGkdDkHiByGBtaya?dl=1">Download trained PRESCIENT models</a></li>
+  </ul>
+
+</p>
+
+<h3>Estimating growth rates</h3>
+<div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
+  <p>
+    PRESCIENT models can incorporate proliferation during training via computing a "growth weight" per cell in a scRNA-seq dataset.
+    This was shown to greatly improve model performance, and we conclude that growth is important for model performance. When lineage tracing is available, empirical growth rates can be computed, however since the primary
+    use case for PRESCIENT is in the absence of lineage tracing, we provide a function for estimating growth from proliferative/death gene signatures.
+    Here, these gene sets are provided in the downloaded data folder and used in the notebook, but you
+    can use any gene set (gst) from common sources like <a href="http://www.gsea-msigdb.org/gsea/msigdb/index.jsp">MSigDB</a>.
+  </p>
+  <ul class="list-group-item list-group-item-action home-list-item">
+    <li><a href="https://nbviewer.jupyter.org/github/gifford-lab/prescient/blob/master/notebooks/estimate-growth-rates.ipynb">View notebook for estimating growth rates.</a></li>
+  </ul>
 </div>
 
 <!-- <h3>Visualizing potential landscape from trained models</h3>

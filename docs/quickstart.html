@@ -26,8 +26,8 @@ location: Quickstart
 <br>
 <h2>Train PRESCIENT model</h2>
 <div class="list-group-item list-group-item-action home-list-item" style="background-color: FloralWhite">
-<p>To train a PRESCIENT model, it is beneficial to use GPU acceleration with CUDA support. PRESCIENT models can be trained on CPUs but will take much longer to train. If able, you can use cloud-based GPU resources with our command-line-interface,
-  please refer to Google Cloud Services or AWS documentation for running command line tools on VMs with cloud GPUs.
+<p>To train a PRESCIENT model, it is beneficial to use GPU acceleration with CUDA support. PRESCIENT models can be trained on CPUs but will take longer to train.
+  For a demo on runining PRESCIENT with free GPU cloud resources on Google Colab, please refer to the <a href="{{ site.baseurl }}/notebooks">notebooks<a/> tab.
 <br>
 <p class="list-group-item list-group-item-action home-list-item">Next, train a basic PRESCIENT model with default parameters with the following command and the <code>data.pt</code> file from the <code>process_data</code> command:<br>
   <code>prescient train_model -i /path/to/data.pt --out_dir /experiments/ --weight_name 'kegg-growth'</code>
