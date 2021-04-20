@@ -1,20 +1,7 @@
-
-
+import numpy as np
+import torch
 from geomloss import SamplesLoss
-
-def w2dist(x, y):
-    """
-    Approximates W-2 distance between sets of points using Sinkhorn as implemented in GeomLoss.
-    Arguments
-    ---------
-    - x: first set of points.
-    - y: second set of points.
-
-    Returns:
-    --------
-    loss_xy: W-2 distance between observed and simulated points at the heldout timepoint.
-    """
-
+from sklearn import decomposition
 
 def evaluate_interpolate_data(y, data_pt_path, simulate_pt_path, num_steps, gpu=None):
     """
