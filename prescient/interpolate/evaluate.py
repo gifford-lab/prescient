@@ -57,9 +57,6 @@ def evaluate_interpolate_data(y, data_pt_path, simulate_pt_path, num_steps, gpu=
     return interpolate_distances
 
 
-
-    return interpolate_error
-
 def evaluate_interpolate_models():
     """
     Wrapper to evaluate multiple models at once.
