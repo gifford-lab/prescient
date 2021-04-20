@@ -52,7 +52,7 @@ def evaluate_interpolate_data(y, data_pt_path, simulate_pt_path, num_steps, gpu=
         scaling = config.sinkhorn_scaling)
     return distance
     for sim in sims:
-        x_i = torch.from_numpy(sim[num_steps,:,:]).float().to(device)
+        x_i = torch.from_numpy(sim[num_steps-1,:,:]).float().to(device)
         interpolate_distances.append(ot_solver(x_i, y_))
     return interpolate_distances
 
