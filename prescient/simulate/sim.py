@@ -63,8 +63,8 @@ def simulate(xp, tps, celltype_annotations, w, model, config, num_sims, num_cell
             xps_i.append(xp_i_)
 
         # group timepoints
-        xps = np.stack(xps_i) #[n_cells x n_steps]
-        all_sims.append(xps) #[n_sims x n_cells x n_steps]
+        xps = np.stack(xps_i) #[n_cells x n_dims x n_steps]
+        all_sims.append(xps) #[n_sims x n_cells x n_dims x n_steps]
 
         pbar.set_description('[simulate] {}'.format(s))
     return all_sims
