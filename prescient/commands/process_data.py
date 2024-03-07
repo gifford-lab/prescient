@@ -58,6 +58,9 @@ def read_data(args):
     if ext == ".rds":
         raise NotImplementedError
 
+    if args.fix_non_consecutive:
+        converter = {orig:new for orig, new in zip(np.unique(tps), np.arange(0, len(np.unique(tps))))}
+        tps = np.array([converter[orig] for orig in tps])
     assert np.all(np.sort(np.unique(tps)) == np.arange(0, len(np.unique(tps)))), "Timepoints must be labeled 0, 1, 2, ... T consecutively; no gaps are allowed"
 
     # transformations
@@ -93,6 +96,10 @@ def create_parser():
     help="Column name of timepoint feature in metadate provided as string.")
     parser.add_argument('--celltype_col', type=str, required=False,
     help="Column name of celltype feature in metadata provided as string.")
+
+    # option to fix non-consecutive timepoint labels
+    parser.add_argument('--fix_non_consecutive', action="store_true", default=False,
+    help="If provided, quantitative timepoints will be overwritted, e.g. 1, 4, 10 becomes 0,1,2.")
 
     # dimensionality reduction growth_parameters
     parser.add_argument('--num_pcs', type=int, default=50, required=False,
