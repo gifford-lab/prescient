@@ -20,6 +20,7 @@ def create_parser():
     parser.add_argument("--num_sims", default=10, help="Number of simulations to run.")
     parser.add_argument("--num_cells", default=200, help="Number of cells per simulation.")
     parser.add_argument("--num_steps", default=None, required=False, help="Define number of forward steps of size dt to take.")
+    parser.add_argument("--num_pcs", required=True, help="Number of PC's. Must match the number given to process_data.")
     parser.add_argument("--gpu", default=None, required=False)
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata.")
     parser.add_argument("--tp_subset", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
@@ -35,11 +36,11 @@ def main(args):
     expr = data_pt["data"]
     pca = data_pt["pca"]
     xp = pca.transform(expr)
-    xp = xp[:,0:30]
+    xp = xp[:,0:int(args.num_pcs)]
 
     # generate perturbations PRESCIENT data file
     xp_perturb = pert.z_score_perturbation(genes, args.perturb_genes, expr, pca, args.z_score)
-    xp_perturb = xp_perturb[:,0:30]
+    xp_perturb = xp_perturb[:,0:int(args.num_pcs)]
     # torch device
     if args.gpu != None:
         device = torch.device('cuda:{}'.format(args.gpu))
