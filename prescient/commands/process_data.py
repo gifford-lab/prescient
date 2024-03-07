@@ -23,7 +23,6 @@ def read_data(args):
     path: path to csv or rds file of processed scRNA-seq dataset.
     meta: path to metadata csv.
     """
-    assert args.growth_path is not None, "You must provide --growth_path."
     ext = os.path.splitext(args.data_path)[1]
     # load in expression dataframe
     if ext == ".csv" or ext == ".txt" or ext == ".tsv":
@@ -58,6 +57,8 @@ def read_data(args):
     # todo: implement Seurat object functionality
     if ext == ".rds":
         raise NotImplementedError
+
+    assert np.all(np.sort(np.unique(tps)) == np.arange(0, len(np.unique(tps)))), "Timepoints must be labeled 0, 1, 2, ... T consecutively; no gaps are allowed"
 
     # transformations
     scaler = sklearn.preprocessing.StandardScaler()
