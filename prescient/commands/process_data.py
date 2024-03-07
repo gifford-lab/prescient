@@ -74,9 +74,9 @@ def read_data(args):
 
     y = list(np.sort(np.unique(tps)))
 
-    x_ = [torch.from_numpy(x[(meta[args.tp_col] == d),:]).float() for d in y]
-    xp_ = [torch.from_numpy(xp[(meta[args.tp_col] == d),:]).float() for d in y]
-    xu_ = [torch.from_numpy(xu[(meta[args.tp_col] == d),:]).float() for d in y]
+    x_ = [torch.from_numpy(x[(tps == d),:]).float() for d in y]
+    xp_ = [torch.from_numpy(xp[(tps == d),:]).float() for d in y]
+    xu_ = [torch.from_numpy(xu[(tps == d),:]).float() for d in y]
 
     return expr, x_, xp_, xu_, y, pca, um, tps, celltype, genes
 
