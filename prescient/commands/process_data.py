@@ -59,7 +59,7 @@ def read_data(args):
         raise NotImplementedError
 
     if args.fix_non_consecutive:
-        converter = {orig:new for orig, new in zip(np.unique(tps), np.arange(0, len(np.unique(tps))))}
+        converter = {orig:new for orig, new in zip(np.sort(np.unique(tps)), np.arange(0, len(np.unique(tps))))}
         tps = np.array([converter[orig] for orig in tps])
     assert np.all(np.sort(np.unique(tps)) == np.arange(0, len(np.unique(tps)))), "Timepoints must be labeled 0, 1, 2, ... T consecutively; no gaps are allowed"
 
