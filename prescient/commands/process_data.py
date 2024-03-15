@@ -27,7 +27,10 @@ def read_data(args):
     # load in expression dataframe
     if ext == ".csv" or ext == ".txt" or ext == ".tsv":
         if args.meta_path == None:
-            raise ValueError("Must provide path to metadata with timepoint and ")
+            raise ValueError("If csv/tsv/txt provided, you must provide a path to csv metadata with timepoint and cell_type")
+        if args.tp_col == None or args.celltype_col == None:
+            raise ValueError("If csv/tsv/txt provided, you must provide --tp_col and --celltype_col.")
+
         expr = pd.read_csv(args.data_path, index_col=0)
         meta = pd.read_csv(args.meta_path)
         genes = expr.columns
@@ -35,13 +38,30 @@ def read_data(args):
         tps = meta[args.tp_col].values.astype(int)
         celltype = meta[args.celltype_col].values
 
-    # todo: implement Scanpy anndata functionality
     if ext == ".h5ad":
-        raise NotImplementedError
+        adata = sc.read_h5ad(args.data_path)
+        expr = adata.X
+        meta = adata.obs.copy()
+        try: 
+            expr = expr.toarray() # In case it is in a sparse format; I do not know if this would be an obstacle downstream.
+        except:
+            pass
+        if args.tp_col == None or args.celltype_col == None:
+            raise ValueError("If h5ad input is provided, you must provide --tp_col and --celltype_col.")
+        assert args.tp_col in adata.obs.columns, f"Expected a timepoint column in .obs called {args.tp_col}, but did not find it. Update the --tp_col arg?"
+        assert args.celltype_col in adata.obs.columns, f"Expected a cell_type column in .obs called {args.celltype_col}, but did not find it. Update the --celltype_col arg?"
+        tps = meta[args.tp_col].values.astype(int)
+        celltype = meta[args.celltype_col].values
+        genes = adata.var_names
 
     # todo: implement Seurat object functionality
     if ext == ".rds":
         raise NotImplementedError
+
+    if args.fix_non_consecutive:
+        converter = {orig:new for orig, new in zip(np.sort(np.unique(tps)), np.arange(0, len(np.unique(tps))))}
+        tps = np.array([converter[orig] for orig in tps])
+    assert np.all(np.sort(np.unique(tps)) == np.arange(0, len(np.unique(tps)))), "Timepoints must be labeled 0, 1, 2, ... T consecutively; no gaps are allowed"
 
     # transformations
     scaler = sklearn.preprocessing.StandardScaler()
@@ -54,9 +74,9 @@ def read_data(args):
 
     y = list(np.sort(np.unique(tps)))
 
-    x_ = [torch.from_numpy(x[(meta[args.tp_col] == d),:]).float() for d in y]
-    xp_ = [torch.from_numpy(xp[(meta[args.tp_col] == d),:]).float() for d in y]
-    xu_ = [torch.from_numpy(xu[(meta[args.tp_col] == d),:]).float() for d in y]
+    x_ = [torch.from_numpy(x[(tps == d),:]).float() for d in y]
+    xp_ = [torch.from_numpy(xp[(tps == d),:]).float() for d in y]
+    xu_ = [torch.from_numpy(xu[(tps == d),:]).float() for d in y]
 
     return expr, x_, xp_, xu_, y, pca, um, tps, celltype, genes
 
@@ -76,6 +96,10 @@ def create_parser():
     help="Column name of timepoint feature in metadate provided as string.")
     parser.add_argument('--celltype_col', type=str, required=False,
     help="Column name of celltype feature in metadata provided as string.")
+
+    # option to fix non-consecutive timepoint labels
+    parser.add_argument('--fix_non_consecutive', action="store_true", default=False,
+    help="If provided, quantitative timepoints will be overwritted, e.g. 1, 4, 10 becomes 0,1,2.")
 
     # dimensionality reduction growth_parameters
     parser.add_argument('--num_pcs', type=int, default=50, required=False,
@@ -104,10 +128,6 @@ def main(args):
         |- w: growth weights
         |- celltype: vector of celltype labels
     """
-    # throw early errors
-    if "csv" in str(args.data_path).split('/')[-1] and (args.meta_path == None or args.tp_col == None or args.celltype_col == None):
-        raise ValueError("If csv/tsv/txt provided, you must provide a path to metadata along with column name designations.")
-
     expr, x, xp, xu, y, pca, um, tps, celltype, genes = read_data(args)
 
     w_pt = torch.load(args.growth_path)
