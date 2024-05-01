@@ -6,6 +6,7 @@ import prescient.simulate as traj
 
 
 def create_parser():
+
     parser = argparse.ArgumentParser()
 
     # perturbation parameters
