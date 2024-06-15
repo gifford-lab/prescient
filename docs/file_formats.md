@@ -52,6 +52,7 @@ If pre-processing is done with Seurat, you can directly provide the Seurat objec
 The `prescient process_data` command will generate a torch pt file `data_pt` (serialized dictionary) that contains all the necessary information for downstream training, simulations, and perturbations. It will contain the following information:
 
 - data_pt["data"]: Numpy ndarray of normalized expression.
+- data_pt["celltype"]: List of celltype labels for each cell.
 - data_pt["genes"]: List of gene features.
 - data_pt["tps"]: Timepoint assignment for each cell in dataset from metadata.
 - data_pt["x"]: Torch tensors of normalied expression split by timepoint.
