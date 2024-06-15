@@ -6,6 +6,7 @@ import prescient.simulate as traj
 
 
 def create_parser():
+
     parser = argparse.ArgumentParser()
 
     # perturbation parameters
@@ -20,6 +21,7 @@ def create_parser():
     parser.add_argument("--num_sims", default=10, help="Number of simulations to run.")
     parser.add_argument("--num_cells", default=200, help="Number of cells per simulation.")
     parser.add_argument("--num_steps", default=None, required=False, help="Define number of forward steps of size dt to take.")
+    parser.add_argument("--num_pcs", required=True, help="Number of PC's. Must match the number given to process_data.")
     parser.add_argument("--gpu", default=None, required=False)
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata.")
     parser.add_argument("--tp_subset", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
@@ -35,11 +37,11 @@ def main(args):
     expr = data_pt["data"]
     pca = data_pt["pca"]
     xp = pca.transform(expr)
-    xp = xp[:,0:30]
+    xp = xp[:,0:int(args.num_pcs)]
 
     # generate perturbations PRESCIENT data file
     xp_perturb = pert.z_score_perturbation(genes, args.perturb_genes, expr, pca, args.z_score)
-    xp_perturb = xp_perturb[:,0:30]
+    xp_perturb = xp_perturb[:,0:int(args.num_pcs)]
     # torch device
     if args.gpu != None:
         device = torch.device('cuda:{}'.format(args.gpu))
@@ -64,9 +66,9 @@ def main(args):
         num_steps = int(args.num_steps)
 
     # simulate forward
-    std_out = traj.simulate(xp, data_pt["tps"], data_pt["celltype"], data_pt["w"], net, config, args.num_sims, args.num_cells, num_steps, device, args.tp_subset, args.celltype_subset)
+    std_out = traj.simulate(xp, data_pt["tps"], data_pt["celltype"], data_pt["w"], net, config, int(args.num_sims), int(args.num_cells), num_steps, device, args.tp_subset, args.celltype_subset)
 
-    perturbed_out = traj.simulate(xp_perturb, data_pt["tps"], data_pt["celltype"], data_pt["w"], net, config, args.num_sims, args.num_cells, num_steps, device, args.tp_subset, args.celltype_subset)
+    perturbed_out = traj.simulate(xp_perturb, data_pt["tps"], data_pt["celltype"], data_pt["w"], net, config, int(args.num_sims), int(args.num_cells), num_steps, device, args.tp_subset, args.celltype_subset)
 
     out_path = os.path.join(args.out_path, args.model_path.split("/")[-1], 'seed_{}_train.epoch_{}_num.sims_{}_num.cells_{}_num.steps_{}_subsets_{}_{}_perturb_simulation.pt'.format(args.seed, args.epoch, args.num_sims, args.num_cells, num_steps, args.tp_subset, args.celltype_subset))
     # save PRESCIENT perturbation file

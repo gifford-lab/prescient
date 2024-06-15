@@ -33,15 +33,18 @@ def simulate(xp, tps, celltype_annotations, w, model, config, num_sims, num_cell
     pbar = tqdm.tqdm(range(num_sims))
     for s in pbar:
         # sample cells based on timepoint or celltype or both
-        if tp_subset != None and celltype_subset != None:
-            idx = pd.DataFrame(meta[(meta["tp"]==tp_subset) & (meta["celltype"]==celltype_subset)]).sample(num_cells).index
-        elif tp_subset != None:
-            idx = pd.DataFrame(meta[meta["tp"]==tp_subset]).sample(num_cells).index
-        elif celltype_subset != None:
-            idx = pd.DataFrame(meta[meta["celltype"]==celltype_subset]).sample(num_cells).index
-        else:
-            idx = meta.sample(num_cells).index
-
+        try:
+            if tp_subset is None and celltype_subset is None:
+                idx = pd.DataFrame(meta[(meta["tp"]==tp_subset) & (meta["celltype"]==celltype_subset)]).sample(int(num_cells)).index
+            elif tp_subset is None:
+                idx = pd.DataFrame(meta[meta["tp"]==tp_subset]).sample(int(num_cells)).index
+            elif celltype_subset is None:
+                idx = pd.DataFrame(meta[meta["celltype"]==celltype_subset]).sample(int(num_cells)).index
+            else:
+                idx = meta.sample(num_cells).index
+        except ValueError:
+            print(meta.head(), flush=True)
+            raise ValueError(f"Those cells were not found in the metadata. Wrong 'tp_subset' or 'celltype_subset'? Timepoint given was {tp_subset} and celltype given was {celltype_subset}. Metadata examples should be printed to stdout.")
         # map tensor to device
         xp_i = xp[idx].to(device)
 
