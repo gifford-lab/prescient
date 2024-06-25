@@ -14,7 +14,7 @@ def create_parser():
     parser.add_argument("--num_steps", default=None, required=False, help="Define number of forward steps of size dt to take.")
     parser.add_argument("--gpu", default=None, required=False, help="If available, assign GPU device number.")
     parser.add_argument("--celltype_subset", default=None, required=False, help="Randomly sample initial cells from a particular celltype defined in metadata.")
-    parser.add_argument("--tp_subset", default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
+    parser.add_argument("--tp_subset", type=int, default=None, required=False, help="Randomly sample initial cells from a particular timepoint.")
     parser.add_argument("-o", "--out_path", required=True, default=None, help="Path to output directory.")
     return parser
 
