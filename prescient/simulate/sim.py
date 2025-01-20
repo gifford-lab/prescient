@@ -34,11 +34,11 @@ def simulate(xp, tps, celltype_annotations, w, model, config, num_sims, num_cell
     for s in pbar:
         # sample cells based on timepoint or celltype or both
         try:
-            if tp_subset is None and celltype_subset is None:
+            if tp_subset is not None and celltype_subset is not None:
                 idx = pd.DataFrame(meta[(meta["tp"]==tp_subset) & (meta["celltype"]==celltype_subset)]).sample(int(num_cells)).index
-            elif tp_subset is None:
+            elif tp_subset is not None:
                 idx = pd.DataFrame(meta[meta["tp"]==tp_subset]).sample(int(num_cells)).index
-            elif celltype_subset is None:
+            elif celltype_subset is not None:
                 idx = pd.DataFrame(meta[meta["celltype"]==celltype_subset]).sample(int(num_cells)).index
             else:
                 idx = meta.sample(num_cells).index
